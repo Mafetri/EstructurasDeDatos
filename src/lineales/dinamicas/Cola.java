@@ -3,7 +3,7 @@
 |     Estructuras de Datos 2021     |
 =====================================
 |      Clase:                       |
-|       > Pila Dinamica             |
+|       > Cola Dinamica             |
 |      Alumno:                      |
 |        > Manuel Felipe Triñanes   |
 |        > FAI - 2738               |
@@ -18,6 +18,7 @@ public class Cola {
     
     //---- Constructor ----
     public Cola(){
+        //Creo la cola con el frente y el fin ambos en nulo.
         this.frente = null;
         this.fin = null;
     }
@@ -28,10 +29,11 @@ public class Cola {
         
         //Si la cola esta vacia
         if(this.fin == null){
+            //Apunto el fin y el frente de la cola a este nuevo elemento
             this.fin = nuevo;
             this.frente = nuevo;
-        }else{
-            //Seteo el enlace del ultimo elemento (this.fin.setEnlace) a nuevo
+        }else{ 
+            //Seteo el enlace del ultimo elemento (this.fin.setEnlace) a al nuevo nodo
             this.fin.setEnlace(nuevo);
             //Y ahora apunto fin a nuevo
             this.fin = nuevo;
@@ -44,7 +46,7 @@ public class Cola {
     public boolean sacar(){
         boolean exito = true;
         
-        //Si la cola esta vacia exito es false
+        //Si la cola esta vacia, "exito" es false
         if(this.frente == null){
             exito = false;
         }else{
