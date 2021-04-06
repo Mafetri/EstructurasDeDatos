@@ -1,3 +1,14 @@
+/*
+=====================================
+|     Estructuras de Datos 2021     |
+=====================================
+|      Clase:                       |
+|       > Pila Dinamica             |
+|      Alumno:                      |
+|        > Manuel Felipe Triñanes   |
+|        > FAI - 2738               |
+=====================================
+*/
 
 package lineales.dinamicas;
 
@@ -5,11 +16,13 @@ public class Cola {
     private Nodo frente;
     private Nodo fin;
     
+    //---- Constructor ----
     public Cola(){
         this.frente = null;
         this.fin = null;
     }
     
+    //---- Poner ----
     public boolean poner(Object elemento){
         Nodo nuevo = new Nodo(elemento, null);
         
@@ -27,6 +40,7 @@ public class Cola {
         return true;
     }
     
+    //---- Sacar ----
     public boolean sacar(){
         boolean exito = true;
         
@@ -45,6 +59,7 @@ public class Cola {
         return exito;
     }
     
+    //---- Obtener Frente ----
     public Object obtenerFrente(){
         Object elemento;
         
@@ -53,6 +68,7 @@ public class Cola {
         return elemento;
     }
     
+    //---- Es Vacia? ----
     public boolean esVacia(){
         boolean vacia = false;
         
@@ -63,11 +79,13 @@ public class Cola {
         return vacia;
     }
     
+    //---- Vaciar -----
     public void vaciar(){
         this.frente = null;
         this.fin = null;
     }
     
+    //---- Clone ----
     public Cola clone(){
         Cola clonada = new Cola();
         Nodo aux1, aux2, nuevo;
@@ -109,6 +127,7 @@ public class Cola {
         return clonada;
     }
     
+    //---- toString ----
     public String toString(){
         String enTexto = "[ ";
         
