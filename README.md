@@ -1,6 +1,14 @@
-## Getting Started
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+Este repositorio cuenta con todas las estructuras de datos y sus implementaciones vistas en Estructuras de Datos (FAI, UNCo) en 2021 por Manuel Triñanes
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+Estructuras:
+  > Pila estatica y dinamica
+  >
+  >  Cola estatica y dinamica
+  >
+  > 
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Folder Structure
 
