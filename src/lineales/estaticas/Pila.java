@@ -30,7 +30,7 @@ public class Pila {
         
         //Si el tope es igual o mayor al tamaño maximo el arreglo entonces
         //no se puede asignar el nuevo elemento por falta de espacio, exito es falso
-        if(this.tope+1 >= this.TAMANIO){
+        if(this.tope+1 >= TAMANIO){
             exito = false;
         }//Sino se incrementa tope en 1 y en la posicion del arreglo del nuevo tope
         //se almacena el nuevo elemento. Por lo tanto la variable "exito" se vuelve

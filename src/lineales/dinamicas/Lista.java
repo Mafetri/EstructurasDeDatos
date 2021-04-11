@@ -55,8 +55,31 @@ public class Lista {
         }
         return exito;
     }
-        
-    public boolean eliminar(int pos){
 
+    public boolean eliminar(int pos){
+        boolean exito = false;
+
+        //Si la lista no esta vacia (longitud > 0) y la posicion a eliminar es
+        //mas grande o igual a 1 (si es mas chico no se podria eliminar nada)
+        //y que es mas chico que la longitud (para no intentar eliminar algo que no existe)
+        if(this.longitud > 0 && 1 <= pos && pos <= this.longitud){
+            //Si se quiere eliminar el primer elemento, entonces apunto cabecera a su enlace
+            if(pos == 1){
+                this.cabecera = this.cabecera.getEnlace();
+            }else{
+                //A un nodo auxiliar lo apunto a la cabecera
+                Nodo aux = this.cabecera;
+                int i = 1;
+                //Voy apuntando el auxiliar al proximo nodo hasta llegar a la posicion deseada
+                while(i < pos-1){
+                    aux = aux.getEnlace();
+                    i++;
+                }
+                //Ahora conecto el nodo que apunta aux al que le sigue al siguiente
+                aux.setEnlace(aux.getEnlace().getEnlace());
+            }
+            exito = true;
+        }
+        return exito;
     }
 }
