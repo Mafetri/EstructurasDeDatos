@@ -60,16 +60,7 @@ public class Pila {
     
     //---- Es Vacia ----
     public boolean esVacia(){
-        boolean vacia;
-        
-        //Si el tope es null, entonces la pila esta vacia
-        if(this.tope == null){
-            vacia = true;
-        }else{
-            vacia = false;
-        }
-        
-        return vacia;
+        return this.tope == null;
     }
     
     //---- Vaciar ----

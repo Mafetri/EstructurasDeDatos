@@ -30,7 +30,7 @@ public class Pila {
         
         //Si el tope es igual o mayor al tamaño maximo el arreglo entonces
         //no se puede asignar el nuevo elemento por falta de espacio, exito es falso
-        if(this.tope >= TAMANIO){
+        if(this.tope+1 >= this.TAMANIO){
             exito = false;
         }//Sino se incrementa tope en 1 y en la posicion del arreglo del nuevo tope
         //se almacena el nuevo elemento. Por lo tanto la variable "exito" se vuelve
@@ -57,6 +57,7 @@ public class Pila {
             arreglo[tope] = null;
             //el tope se reduce en 1
             tope--;
+            exito = true;
         }
         return exito;
     }
@@ -76,15 +77,7 @@ public class Pila {
     //---- Es Vacio ---- 
     //Devuelve true si la pila esta vacia o false en caso contrario
     public boolean esVacia(){
-        boolean estaVacia;
-        
-        if(tope <= -1){
-            estaVacia = true;
-        }else{
-            estaVacia = false;
-        }
-        
-        return estaVacia;
+        return tope <= -1;
     }
     
     //---- Vaciar ----
