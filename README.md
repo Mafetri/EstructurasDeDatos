@@ -2,11 +2,11 @@
 Este repositorio cuenta con todas las estructuras de datos y sus implementaciones vistas en Estructuras de Datos (FAI, UNCo) en 2021 por Manuel Triñanes
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 Estructuras:
-  > Pila estatica y dinamica
+  > Pila (estatica y dinamica)
   >
-  >  Cola estatica y dinamica
+  >  Cola (estatica y dinamica)
   >
-  > 
+  > Lista
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
