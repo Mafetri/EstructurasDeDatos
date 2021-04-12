@@ -118,17 +118,12 @@ public class Lista {
             int i = 1;
             Nodo aux = this.cabecera;
             // Mientras i sea mas chico o igual a longitud y la cabecera no sea nulla
-            // (osea que la lista esta vacia), busco el objeto
-            // HAY DOS FORMAS, PONER UN OR
-            // PARA QUE CORTE CUANDO ENCUENTRE EL ELEMENTO O FORZAR EL CORTE CUANDO LO
-            // ENCUENTRE O QUE GASTE TIEMPO DE EJECUCION DE MAS.
-            while (i <= this.longitud && this.cabecera != null) {
+            // (osea que la lista esta vacia) y que localizacion sea -1 (todavia no fue encontrado), busco el objeto
+            while (localizacion == -1 && i <= this.longitud && this.cabecera != null) {
                 // Si el elemento de aux es el buscado
                 if (aux.getElem() == elemento) {
                     // Guardo esa posicion
                     localizacion = i;
-                    // Asigo la longitud+1 a i para que el while corte
-                    i = this.longitud + 1;
                 } else {
                     if (i != this.longitud) {
                         aux = aux.getEnlace();
