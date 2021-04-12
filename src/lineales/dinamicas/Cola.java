@@ -65,20 +65,18 @@ public class Cola {
     public Object obtenerFrente(){
         Object elemento;
         
-        elemento = this.frente.getElem();
+        if(this.frente != null){
+            elemento = this.frente.getElem();
+        }else{
+            elemento = "COLA VACIA";
+        }
         
         return elemento;
     }
     
     //---- Es Vacia? ----
     public boolean esVacia(){
-        boolean vacia = false;
-        
-        if(this.frente == null){
-            vacia = true;
-        }
-        
-        return vacia;
+        return this.frente == null;
     }
     
     //---- Vaciar -----

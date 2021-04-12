@@ -13,7 +13,7 @@ public class Cola {
         this.fin = 0;
     }
     
-    //---- Poner ---- OK!
+    //---- Poner ----
     public boolean poner(Object elemento){
         boolean exito = false;
         
@@ -35,7 +35,7 @@ public class Cola {
         return exito;
     }
     
-    //---- Sacar ---- OK!
+    //---- Sacar ----
     public boolean sacar(){
         boolean exito;
         
@@ -55,24 +55,16 @@ public class Cola {
     public Object obtenerFrente(){
         Object elFrente = "Cola Vacia!";
         
-        if(!this.esVacia()){
+        if(this.frente != this.fin){
             elFrente = arreglo[frente];
         }
         
         return elFrente;
     }
     
-    //---- Es Vacia ---- OK!
+    //---- Es Vacia ---- 
     public boolean esVacia(){
-        boolean vacia;
-        
-        if(this.frente == this.fin){
-            vacia = true;
-        }else{
-            vacia = false;
-        }
-        
-        return vacia;
+        return this.frente == this.fin;
     }
     
     //---- Vaciar ----
