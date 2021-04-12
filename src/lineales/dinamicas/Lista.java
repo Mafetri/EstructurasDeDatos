@@ -87,43 +87,141 @@ public class Lista {
     }
 
     public Object recuperar(int pos) {
-        //Si la pos no es valida, osea que es mas chico que 1 o es mas grande que la longitud
-        //entonces va a retornar POSICION NO VALIDA
-        Object aRetornar = "POSICION NO VALIDA";
-        
-        if (this.longitud > 0 && 1 <= pos && pos <= this.longitud) {
-            // A un nodo auxiliar lo apunto a la cabecera
-            Nodo aux = this.cabecera;
-            int i = 1;
-            // Voy apuntando el auxiliar al proximo nodo hasta llegar a la posicion deseada
-            while (i < pos) {
-                aux = aux.getEnlace();
-                i++;
+        Object aRetornar;
+        // Si la lista no esta vacia
+        if (this.cabecera != null) {
+            // Si la posicion ingresada es valida
+            if (1 <= pos && pos <= this.longitud) {
+                // A un nodo auxiliar lo apunto a la cabecera
+                Nodo aux = this.cabecera;
+                int i = 1;
+                // Voy apuntando el auxiliar al proximo nodo hasta llegar a la posicion deseada
+                while (i < pos) {
+                    aux = aux.getEnlace();
+                    i++;
+                }
+                aRetornar = aux.getElem().toString();
+            } else {
+                aRetornar = "POSICION NO VALIDA";
             }
-            aRetornar = aux.getElem().toString();
+        } else {
+            aRetornar = "LISTA VACIA";
         }
+
         return aRetornar;
     }
 
     public int localizar(Object elemento) {
         int localizacion = -1;
-        int i = 1;
-        Nodo aux = this.cabecera;
-        // Mientras i sea mas chico o igual a longitud, busco el objeto         //HAY DOS FORMAS, PONER UN OR PARA QUE CORTE CUANDO ENCUENTRE EL ELEMENTO O FORZAR EL CORTE CUANDO LO ENCUENTRE O QUE GASTE TIEMPO DE EJECUCION DE MAS.
-        while (i <= this.longitud) {
-            // Si el elemento de aux es el buscado
-            if (aux.getElem() == elemento) {
-                // Guardo esa posicion
-                localizacion = i;
-                // Asigo la longitud+1 a i para que el while corte
-                i = this.longitud + 1;
-            } else {
-                if (i != this.longitud) {
-                    aux = aux.getEnlace();
+        // Si la lista no esta vacia
+        if (this.cabecera != null) {
+            int i = 1;
+            Nodo aux = this.cabecera;
+            // Mientras i sea mas chico o igual a longitud y la cabecera no sea nulla
+            // (osea que la lista esta vacia), busco el objeto
+            // HAY DOS FORMAS, PONER UN OR
+            // PARA QUE CORTE CUANDO ENCUENTRE EL ELEMENTO O FORZAR EL CORTE CUANDO LO
+            // ENCUENTRE O QUE GASTE TIEMPO DE EJECUCION DE MAS.
+            while (i <= this.longitud && this.cabecera != null) {
+                // Si el elemento de aux es el buscado
+                if (aux.getElem() == elemento) {
+                    // Guardo esa posicion
+                    localizacion = i;
+                    // Asigo la longitud+1 a i para que el while corte
+                    i = this.longitud + 1;
+                } else {
+                    if (i != this.longitud) {
+                        aux = aux.getEnlace();
+                    }
+                    i++;
                 }
+            }
+        }
+
+        return localizacion;
+    }
+
+    public void vaciar() {
+        this.cabecera = null;
+    }
+
+    public boolean esVacia() {
+        return this.cabecera == null;
+    }
+
+    public Lista clone() {
+        Lista clonada = new Lista();
+
+        if (this.cabecera != null) {
+            Nodo aux, aux2, nuevo;
+            int i = 1;
+
+            // Apunto aux a la cabecera
+            aux = this.cabecera;
+
+            // A la cabecera de clonada le asigno el elemento de la lista original
+            clonada.cabecera = new Nodo(aux.getElem(), null);
+            clonada.longitud = 1;
+
+            // Apunto aux2 a la nueva cabecera de clonada
+            aux2 = clonada.cabecera;
+
+            while (i < this.longitud) {
+                // Apunto aux a su propio enlace
+                aux = aux.getEnlace();
+
+                // Al nodo nuevo le asigno el elemento sin enlace
+                nuevo = new Nodo(aux.getElem(), null);
+
+                // Aumento la longitud de clonada
+                clonada.longitud++;
+
+                // Apunto aux2 a su enlace
+                aux2.setEnlace(nuevo);
+
+                // Apunto aux2 a su propio enlace
+                aux2 = aux2.getEnlace();
+
                 i++;
             }
         }
-        return localizacion;
+
+        return clonada;
+
+    }
+
+    public int longitud() {
+        return this.longitud;
+    }
+
+    public String toString() {
+        String aTexto = "[ ";
+        if (this.cabecera != null) {
+            int i = 1;
+            Nodo aux = this.cabecera;
+            while (i <= longitud) {
+                // Si aux es igual a cabcera, entonces esta apuntando al primer nodo
+                if (aux == this.cabecera) {
+                    aTexto += aux.getElem().toString();
+                } else {
+                    aTexto += ", " + aux.getElem().toString();
+                }
+
+                // Si el enlace de aux no es nulo (osea que no esta apuntando a la ultima
+                // posicion)
+                if (aux.getEnlace() != null) {
+                    // Lo apunto al siguiente nodo
+                    aux = aux.getEnlace();
+                }
+
+                i++;
+            }
+        } else {
+            aTexto += "- LISTA VACIA -";
+        }
+
+        aTexto += " ]";
+
+        return aTexto;
     }
 }
