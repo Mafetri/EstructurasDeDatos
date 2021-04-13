@@ -1,4 +1,5 @@
 package test.lineales;
+
 import lineales.dinamicas.*;
 
 public class PruebaLista {
@@ -30,7 +31,6 @@ public class PruebaLista {
 
         Lista concatenada = concatenar(l1, l2).clone();
 
-
         System.out.println("Cadena 1: " + l1.toString());
         System.out.println("Cadena 2: " + l2.toString());
         System.out.println("Cadena concatenada: " + concatenada.toString());
@@ -55,9 +55,10 @@ public class PruebaLista {
     }
 
     public static boolean comprobar(Lista l1) {
-        int i = 1;
+        boolean comprobado = false;
         int coincidentes = 0;
         int coincidentesInvertidos = 0;
+        int longitudCadena = 0;
         Cola cAux = new Cola();
         Pila pAux = new Pila();
 
@@ -68,32 +69,47 @@ public class PruebaLista {
             while ((int) l1.recuperar(1) != 0) {
                 cAux.poner(l1.recuperar(1));
                 pAux.apilar(l1.recuperar(1));
+                longitudCadena++;
                 l1.eliminar(1);
             }
 
             l1.eliminar(1);
 
-            // Mientras el frente de la cola sea igual al proximo elemento de la lista
-            while (cAux.obtenerFrente() == l1.recuperar(1) && cAux != null) {
-                coincidentes++;
-                l1.eliminar(1);
-                cAux.sacar();
-            }
-
-            // Si la posicion 1 en la que quedo la lista es 0, quiere decir que la segunda
-            // cadena coincidio en numero de posiciones con la primera
-            if ((int) l1.recuperar(1) == 0) {
-                // Elimino el supuesto 0 que habra quedado en la primera posicion
-                l1.eliminar(1);
-
-                //Mientras que el tope de la pila sea el elemento siguiente de la lista
-                while (pAux.obtenerTope() == l1.recuperar(i)) {
-                    coincidentesInvertidos++;
+            // Si la longitud de la cadena formada es mas grande que la longitud que queda
+            // de lista
+            // es inecesario que compare porque ya desde el vamos no van a ser iguales
+            if (longitudCadena < l1.longitud()) {
+                // Mientras el frente de la cola sea igual al proximo elemento de la lista
+                while (!cAux.esVacia()) {
+                    if (cAux.obtenerFrente() == l1.recuperar(1)) {
+                        coincidentes++;
+                    }
                     l1.eliminar(1);
-                    pAux.desapilar();
+                    cAux.sacar();
+                }
+
+                // Si la posicion 1 en la que quedo la lista es 0, quiere decir que la segunda
+                // cadena coincidio en numero de posiciones con la primera
+                // Y si la longitud de la lista es mas grande que la dicha cadena a analizar
+                if (l1.longitud() > longitudCadena && (int) l1.recuperar(1) == 0) {
+                    // Elimino el supuesto 0 que habra quedado en la primera posicion
+                    l1.eliminar(1);
+
+                    // Mientras que el tope de la pila sea el elemento siguiente de la lista
+                    while (pAux.obtenerTope() == l1.recuperar(1)) {
+                        coincidentesInvertidos++;
+                        l1.eliminar(1);
+                        pAux.desapilar();
+                    }
+                }
+
+                // Si los coincidentes no la cadena normal y la invertida son iguales, entonces
+                // la lista esta correcta
+                if (coincidentes == coincidentesInvertidos && coincidentes != 0) {
+                    comprobado = true;
                 }
             }
         }
-        return coincidentes == coincidentesInvertidos;
+        return comprobado;
     }
 }
