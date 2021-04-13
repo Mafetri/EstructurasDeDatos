@@ -100,7 +100,7 @@ public class Lista {
                     aux = aux.getEnlace();
                     i++;
                 }
-                aRetornar = aux.getElem().toString();
+                aRetornar = aux.getElem();
             } else {
                 aRetornar = "POSICION NO VALIDA";
             }
