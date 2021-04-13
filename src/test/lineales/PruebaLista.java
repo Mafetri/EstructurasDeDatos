@@ -32,11 +32,14 @@ public class PruebaLista {
         Lista concatenada = concatenar(l1, l2).clone();
 
         System.out.println("Cadena 1: " + l1.toString());
+        System.out.println("Invertida: " + invertir(l1).toString());
         System.out.println("Cadena 2: " + l2.toString());
+        System.out.println("Invertida: " + invertir(l2).toString());
         System.out.println("Cadena concatenada: " + concatenada.toString());
         System.out.println("Lista: " + l3.toString());
-
+        System.out.println("Invertida: " + invertir(l3).toString());
         System.out.println(comprobar(l3));
+
     }
 
     public static Lista concatenar(Lista l1, Lista l2) {
@@ -55,6 +58,7 @@ public class PruebaLista {
     }
 
     public static boolean comprobar(Lista l1) {
+        Lista copia = l1.clone();
         boolean comprobado = false;
         int coincidentes = 0;
         int coincidentesInvertidos = 0;
@@ -63,42 +67,42 @@ public class PruebaLista {
         Pila pAux = new Pila();
 
         // Si en la lista hay un 0, entonces existe al menos una cadena
-        if (l1.localizar(0) > 0) {
+        if (copia.localizar(0) > 0) {
             // Mientras que no llegue al maximo de l1 y la posicion de la lista en i
             // sea distinta de 0
-            while ((int) l1.recuperar(1) != 0) {
-                cAux.poner(l1.recuperar(1));
-                pAux.apilar(l1.recuperar(1));
+            while ((int) copia.recuperar(1) != 0) {
+                cAux.poner(copia.recuperar(1));
+                pAux.apilar(copia.recuperar(1));
                 longitudCadena++;
-                l1.eliminar(1);
+                copia.eliminar(1);
             }
 
-            l1.eliminar(1);
+            copia.eliminar(1);
 
             // Si la longitud de la cadena formada es mas grande que la longitud que queda
             // de lista
             // es inecesario que compare porque ya desde el vamos no van a ser iguales
-            if (longitudCadena < l1.longitud()) {
+            if (longitudCadena < copia.longitud()) {
                 // Mientras el frente de la cola sea igual al proximo elemento de la lista
                 while (!cAux.esVacia()) {
-                    if (cAux.obtenerFrente() == l1.recuperar(1)) {
+                    if (cAux.obtenerFrente() == copia.recuperar(1)) {
                         coincidentes++;
                     }
-                    l1.eliminar(1);
+                    copia.eliminar(1);
                     cAux.sacar();
                 }
 
                 // Si la posicion 1 en la que quedo la lista es 0, quiere decir que la segunda
                 // cadena coincidio en numero de posiciones con la primera
                 // Y si la longitud de la lista es mas grande que la dicha cadena a analizar
-                if (l1.longitud() > longitudCadena && (int) l1.recuperar(1) == 0) {
+                if (copia.longitud() > longitudCadena && (int) copia.recuperar(1) == 0) {
                     // Elimino el supuesto 0 que habra quedado en la primera posicion
-                    l1.eliminar(1);
+                    copia.eliminar(1);
 
                     // Mientras que el tope de la pila sea el elemento siguiente de la lista
-                    while (pAux.obtenerTope() == l1.recuperar(1)) {
+                    while (pAux.obtenerTope() == copia.recuperar(1)) {
                         coincidentesInvertidos++;
-                        l1.eliminar(1);
+                        copia.eliminar(1);
                         pAux.desapilar();
                     }
                 }
@@ -111,5 +115,21 @@ public class PruebaLista {
             }
         }
         return comprobado;
+    }
+
+    public static Lista invertir(Lista l1) {
+        Lista copia = l1.clone();
+        Lista invertida = new Lista();
+        int posicionTope = copia.longitud();
+        int i = 1;
+
+        while (!copia.esVacia()) {
+            invertida.insertar(copia.recuperar(posicionTope), i);
+            copia.eliminar(posicionTope);
+            i++;
+            posicionTope--;
+        }
+
+        return invertida;
     }
 }
