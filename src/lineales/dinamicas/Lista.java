@@ -139,6 +139,7 @@ public class Lista {
 
     public void vaciar() {
         this.cabecera = null;
+        this.longitud = 0;
     }
 
     public boolean esVacia() {
@@ -224,7 +225,7 @@ public class Lista {
     public void invertir() {
         if (this.cabecera != null) {
             // Envia la cabecera a un modulo recursivo que crea nodos
-            // sin enlace igules a los originales  y al desapilar los enalaza al reves
+            // sin enlace igules a los originales y al desapilar los enalaza al reves
             invertirNodo(this.cabecera);
         }
     }
@@ -254,5 +255,54 @@ public class Lista {
         }
 
         return aux;
+    }
+
+    //Muy pero muy ineficiente y no funcional
+    public void eliminarApariciones(Object elemento) {
+        Nodo aux = this.cabecera;
+
+        while (aux != null) {
+            //Si la cabecera de la lista es igual a aux
+            if (this.cabecera == aux) {
+                //Y si el elemento de aux es igual al que estoy buscando
+                if (aux.getElem() == elemento) {
+                    // Y ademas si el enlace de aux no es nulo (osea que queda al menos un nodo mas)
+                    if (aux.getEnlace() != null) {
+                        // Muevo cabecera al nodo que acabo de analizar, reduzco longitud
+                        // y avanzo en la lectura de nodos
+                        this.cabecera = aux.getEnlace();
+                        this.longitud--;
+                        aux = aux.getEnlace();
+                    } else {
+                        // Sino, quiere decir que estoy en el ultimo nodo por ende
+                        // como coinciden aux con cabecera y el ultimo elemento es nulo
+                        // debo vaciar la lista
+                        this.cabecera = null;
+                        aux = null;
+                        this.longitud = 0;
+                    }
+                }
+            }
+
+            // Si el elemento no es nulo y la cabecera y aux no son iguales
+            if (aux != null && aux != this.cabecera) {
+                // Y si la longitud es al menos mayor a 1 (quedan elementos)
+                if (this.longitud > 1) {
+                    // Entonces analizo si el siguiente elemento es el que quiero
+                    if (aux.getEnlace().getElem() == elemento) {
+                        //Si es asi, enlazo el nodo actual no al proximo sino al siguiente
+                        aux.setEnlace(aux.getEnlace().getEnlace());
+                        //Y como elimine un nodo, reduzco la longitud de la lista
+                        this.longitud--;
+                    }
+                }else{ // Si no quedan elementos entonces el nodo en el que estoy parado
+                    aux.setEnlace(null);
+                    this.longitud--;
+                }
+                aux = aux.getEnlace();
+
+            }
+        }
+
     }
 }
