@@ -40,6 +40,8 @@ public class PruebaLista {
         System.out.println("Invertida: " + invertir(l3).toString());
         System.out.println(comprobar(l3));
 
+        l1.invertir();
+        System.out.println(l1.toString());
     }
 
     public static Lista concatenar(Lista l1, Lista l2) {

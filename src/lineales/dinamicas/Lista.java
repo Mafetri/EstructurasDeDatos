@@ -118,7 +118,8 @@ public class Lista {
             int i = 1;
             Nodo aux = this.cabecera;
             // Mientras i sea mas chico o igual a longitud y la cabecera no sea nulla
-            // (osea que la lista esta vacia) y que localizacion sea -1 (todavia no fue encontrado), busco el objeto
+            // (osea que la lista esta vacia) y que localizacion sea -1 (todavia no fue
+            // encontrado), busco el objeto
             while (localizacion == -1 && i <= this.longitud && this.cabecera != null) {
                 // Si el elemento de aux es el buscado
                 if (aux.getElem() == elemento) {
@@ -218,5 +219,45 @@ public class Lista {
         aTexto += " ]";
 
         return aTexto;
+    }
+
+    public Lista invertir(){
+        Lista invertida = new Lista();
+
+        // Hago un nodo auxiliar que va a estar "anidado" a los nodos de la cadena invertida
+        invertirNodo(this.cabecera, invertida);
+
+        //Seteo la longitud de la nueva lista invertida a la misma cantidad que la original
+        invertida.longitud = this.longitud;
+
+        System.out.println(invertida.cabecera.getElem().toString());
+
+        return invertida;
+    }
+
+    private Nodo invertirNodo(Nodo aux, Lista invertida) {
+        // Creo un nodo en cada llamado recursivo con el elemento del nodo
+        // llamado y sin enlace
+        Nodo anterior = new Nodo(aux.getElem(), null);
+
+        // Mientras en enlace de anterior no sea nulo, no he llagado al final
+        if(aux.getEnlace() != null){
+            // Hago el llamado recursivo apuntando anterior a su propio enlace
+            aux = invertirNodo(aux.getEnlace(), invertida);
+
+            // Enlazo auxiliar con el nodo anterior (por esa razon se llama asi)
+            aux.setEnlace(anterior);
+
+            // Apunto aux al nodo anterior
+            aux = anterior;
+        }else{
+            // Cuando llego al final, apunto aux al nodo anterior
+            aux = anterior;
+
+            //Y ademas apunto la cabecera a aux
+            invertida.cabecera = aux;
+        }
+
+        return aux;
     }
 }
