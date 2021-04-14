@@ -221,41 +221,36 @@ public class Lista {
         return aTexto;
     }
 
-    public Lista invertir(){
-        Lista invertida = new Lista();
-
-        // Hago un nodo auxiliar que va a estar "anidado" a los nodos de la cadena invertida
-        invertirNodo(this.cabecera, invertida);
-
-        //Seteo la longitud de la nueva lista invertida a la misma cantidad que la original
-        invertida.longitud = this.longitud;
-
-        System.out.println(invertida.cabecera.getElem().toString());
-
-        return invertida;
+    public void invertir() {
+        if (this.cabecera != null) {
+            // Envia la cabecera a un modulo recursivo que crea nodos
+            // sin enlace igules a los originales  y al desapilar los enalaza al reves
+            invertirNodo(this.cabecera);
+        }
     }
 
-    private Nodo invertirNodo(Nodo aux, Lista invertida) {
+    private Nodo invertirNodo(Nodo aux) {
         // Creo un nodo en cada llamado recursivo con el elemento del nodo
         // llamado y sin enlace
         Nodo anterior = new Nodo(aux.getElem(), null);
 
         // Mientras en enlace de anterior no sea nulo, no he llagado al final
-        if(aux.getEnlace() != null){
+        if (aux.getEnlace() != null) {
             // Hago el llamado recursivo apuntando anterior a su propio enlace
-            aux = invertirNodo(aux.getEnlace(), invertida);
+            aux = invertirNodo(aux.getEnlace());
 
             // Enlazo auxiliar con el nodo anterior (por esa razon se llama asi)
             aux.setEnlace(anterior);
 
             // Apunto aux al nodo anterior
             aux = anterior;
-        }else{
+        } else {
             // Cuando llego al final, apunto aux al nodo anterior
             aux = anterior;
 
-            //Y ademas apunto la cabecera a aux
-            invertida.cabecera = aux;
+            // Y ademas apunto la cabecera a aux ya que ahora aux es
+            // el inicio de la lista invertida
+            this.cabecera = aux;
         }
 
         return aux;
