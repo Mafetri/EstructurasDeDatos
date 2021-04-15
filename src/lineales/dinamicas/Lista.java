@@ -16,11 +16,14 @@ public class Lista {
     private Nodo cabecera;
     private int longitud;
 
+    // ---- Constructor ----
     public Lista() {
         this.cabecera = null;
         this.longitud = 0;
     }
 
+    //---- Insertar ----
+    // Inserta un elemento en la lista en la posicion solicitada
     public boolean insertar(Object elemento, int pos) {
         boolean exito = true;
 
@@ -56,6 +59,8 @@ public class Lista {
         return exito;
     }
 
+    //---- Eliminar ----
+    // Elimina un el elemento en la posicion solicitada
     public boolean eliminar(int pos) {
         boolean exito = false;
 
@@ -86,6 +91,8 @@ public class Lista {
         return exito;
     }
 
+    //---- Recuperar ----
+    // Devulve un elemento de la posicion solicitada
     public Object recuperar(int pos) {
         Object aRetornar;
         // Si la lista no esta vacia
@@ -111,6 +118,8 @@ public class Lista {
         return aRetornar;
     }
 
+    //---- Localizar ----
+    // Devulve la posicion de un objeto solicitado
     public int localizar(Object elemento) {
         int localizacion = -1;
         // Si la lista no esta vacia
@@ -137,15 +146,21 @@ public class Lista {
         return localizacion;
     }
 
+    //---- Vaciar ----
+    // Vacia la lista
     public void vaciar() {
         this.cabecera = null;
         this.longitud = 0;
     }
 
+    //---- Es Vacia ----
+    // Devuelve true si esta vacia o false si no lo esta
     public boolean esVacia() {
         return this.cabecera == null;
     }
 
+    //---- Clone ----
+    // Devuelve una lista clonada de la original
     public Lista clone() {
         Lista clonada = new Lista();
 
@@ -187,10 +202,14 @@ public class Lista {
 
     }
 
+    //---- Longitud ----
+    // Devulve la longitud de la lista
     public int longitud() {
         return this.longitud;
     }
 
+    //---- To String ----
+    // Devuelve en texto la lista completa
     public String toString() {
         String aTexto = "[ ";
         if (this.cabecera != null) {
@@ -222,6 +241,8 @@ public class Lista {
         return aTexto;
     }
 
+    //---- Invertir ----
+    // Invierte la lista sin utilizar metedos del TDA
     public void invertir() {
         if (this.cabecera != null) {
             // Envia la cabecera a un modulo recursivo que crea nodos
@@ -230,6 +251,8 @@ public class Lista {
         }
     }
 
+    //---- Invertir nodo ----
+    // Metodo auxiliar de Invertir, invierte lo nodos de forma recursiva
     private Nodo invertirNodo(Nodo aux) {
         // Creo un nodo en cada llamado recursivo con el elemento del nodo
         // llamado y sin enlace
@@ -257,7 +280,9 @@ public class Lista {
         return aux;
     }
 
-    // Muy pero muy ineficiente y no funcional
+    //---- Eliminar Apariciones ----
+    // Elimina todos los elementos que sean iguales al enviado por parametro
+    // (NO FUNCIONA)
     public void eliminarApariciones(Object elemento) {
         Nodo aux = this.cabecera;
 
@@ -306,6 +331,8 @@ public class Lista {
 
     }
 
+    //---- Obtener Multiplos ----
+    // Devuelve una lista con los elementos en posicion multiplos del numero enviado
     public Lista obtenerMultiplos(int num) {
         Lista multiplos = new Lista();
 
