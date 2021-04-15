@@ -173,7 +173,7 @@ public class Lista {
                 // Aumento la longitud de clonada
                 clonada.longitud++;
 
-                // Apunto aux2 a su enlace
+                // Seteo el enlace de aux2 al nuevo nodo
                 aux2.setEnlace(nuevo);
 
                 // Apunto aux2 a su propio enlace
@@ -257,14 +257,14 @@ public class Lista {
         return aux;
     }
 
-    //Muy pero muy ineficiente y no funcional
+    // Muy pero muy ineficiente y no funcional
     public void eliminarApariciones(Object elemento) {
         Nodo aux = this.cabecera;
 
         while (aux != null) {
-            //Si la cabecera de la lista es igual a aux
+            // Si la cabecera de la lista es igual a aux
             if (this.cabecera == aux) {
-                //Y si el elemento de aux es igual al que estoy buscando
+                // Y si el elemento de aux es igual al que estoy buscando
                 if (aux.getElem() == elemento) {
                     // Y ademas si el enlace de aux no es nulo (osea que queda al menos un nodo mas)
                     if (aux.getEnlace() != null) {
@@ -290,12 +290,12 @@ public class Lista {
                 if (this.longitud > 1) {
                     // Entonces analizo si el siguiente elemento es el que quiero
                     if (aux.getEnlace().getElem() == elemento) {
-                        //Si es asi, enlazo el nodo actual no al proximo sino al siguiente
+                        // Si es asi, enlazo el nodo actual no al proximo sino al siguiente
                         aux.setEnlace(aux.getEnlace().getEnlace());
-                        //Y como elimine un nodo, reduzco la longitud de la lista
+                        // Y como elimine un nodo, reduzco la longitud de la lista
                         this.longitud--;
                     }
-                }else{ // Si no quedan elementos entonces el nodo en el que estoy parado
+                } else { // Si no quedan elementos entonces el nodo en el que estoy parado
                     aux.setEnlace(null);
                     this.longitud--;
                 }
@@ -304,5 +304,49 @@ public class Lista {
             }
         }
 
+    }
+
+    public Lista obtenerMultiplos(int num) {
+        Lista multiplos = new Lista();
+
+        // Si el numero es valido y la lista no esta vacia
+        if (this.cabecera != null && num > 0) {
+            int i = 1;
+            Nodo aux = this.cabecera;
+            Nodo aux2 = new Nodo(null, null);
+
+            // Mientras i no sea mayor que la longitud de la lista origianl
+            while (i <= this.longitud) {
+                // Si i es multiplo de num entonces
+                if (i % num == 0) {
+                    // Si i es igual a num, quiere decir que es la primera posicion a llenar
+                    if (i == num) {
+                        multiplos.cabecera = new Nodo(aux.getElem(), null);
+
+                        aux2 = multiplos.cabecera;
+                    } else {
+                        // Creo un nodo con el elemento de aux (lista original)
+                        Nodo nuevo = new Nodo(aux.getElem(), null);
+
+                        // Seteo el enlace de aux2 con el nuevo nodo
+                        aux2.setEnlace(nuevo);
+
+                        // Apunto aux2 a su enlace (el nuevo nodo)
+                        aux2 = aux2.getEnlace();
+                    }
+
+                    // Y aumento la longitud de la lista en 1
+                    multiplos.longitud++;
+                }
+
+                // Avanzo aux al proximo nodo
+                aux = aux.getEnlace();
+
+                i++;
+            }
+
+        }
+
+        return multiplos;
     }
 }
