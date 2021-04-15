@@ -28,20 +28,34 @@ public class PruebaLista {
         l3.insertar(5, 9);
         l3.insertar(6, 10);
         l3.insertar(9, 11);
+        l3.insertar(11, 12);
 
-        Lista concatenada = concatenar(l1, l2).clone();
-
+        // Muestro cadena 1 y su invertida
         System.out.println("Cadena 1: " + l1.toString());
         System.out.println("Invertida: " + invertir(l1).toString());
+        
+        // Muestro cadena 2 y su invertida
         System.out.println("Cadena 2: " + l2.toString());
         System.out.println("Invertida: " + invertir(l2).toString());
-        System.out.println("Cadena concatenada: " + concatenada.toString());
+
+        //Muestro la concatenacion de las cadenas 1 y 2
+        System.out.println("Cadena concatenada: " + concatenar(l1, l2).toString());
+
+        // Muestro la cadena 3, su invertida y una comprobacion
         System.out.println("Lista: " + l3.toString());
         System.out.println("Invertida: " + invertir(l3).toString());
         System.out.println(comprobar(l3));
 
+        //Invierto a l1 utilizando el metodo del TDA y lo muestro
         l1.invertir();
         System.out.println(l1.toString());
+
+        // Muestro una cadena que solo tiene los multiplos del numero enviado
+        System.out.println(l3.obtenerMultiplos(2).toString());
+
+        // Muestro l3 sin los elementos que le envio por parametro
+        l3.eliminarApariciones(9);
+        System.out.println(l3.toString());
     }
 
     public static Lista concatenar(Lista l1, Lista l2) {
