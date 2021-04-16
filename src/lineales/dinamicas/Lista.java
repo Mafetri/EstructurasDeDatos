@@ -94,7 +94,7 @@ public class Lista {
     //---- Recuperar ----
     // Devulve un elemento de la posicion solicitada
     public Object recuperar(int pos) {
-        Object aRetornar;
+        Object aRetornar = null;
         // Si la lista no esta vacia
         if (this.cabecera != null) {
             // Si la posicion ingresada es valida
@@ -108,11 +108,7 @@ public class Lista {
                     i++;
                 }
                 aRetornar = aux.getElem();
-            } else {
-                aRetornar = "POSICION NO VALIDA";
-            }
-        } else {
-            aRetornar = "LISTA VACIA";
+            } 
         }
 
         return aRetornar;
