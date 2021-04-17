@@ -1,5 +1,7 @@
 package jerarquicas.dinamicas;
 
+import lineales.dinamicas.*;
+
 public class ArbolBin {
     private NodoArbol raiz;
 
@@ -7,6 +9,7 @@ public class ArbolBin {
         this.raiz = null;
     }
 
+    // ---- Insertar ----
     public boolean insertar(Object elemNuevo, Object elemPadre, char lugar) {
         boolean exito = true;
 
@@ -39,7 +42,6 @@ public class ArbolBin {
         }
         return exito;
     }
-
     private NodoArbol obtenerNodo(NodoArbol n, Object buscando) {
         NodoArbol resultado = null;
 
@@ -63,10 +65,12 @@ public class ArbolBin {
         return resultado;
     }
 
+    // ---- Es Vacio ----
     public boolean esVacio() {
         return this.raiz == null;
     }
 
+    // ---- Padre ----
     public Object padre(Object hijo) {
         Object padre = null;
 
@@ -78,20 +82,19 @@ public class ArbolBin {
 
         return padre;
     }
-
     private Object padreAux(NodoArbol aux, Object hijo, Object padre) {
         Object padreElem = null;
 
         // Si el nodo enviado es valido
-        if(aux != null){
+        if (aux != null) {
             // Si el padre del hijo es el nodo enviado, entonces
-            if(aux.getElem().equals(hijo)){
+            if (aux.getElem().equals(hijo)) {
                 padreElem = padre;
-            }else{
+            } else {
                 // Busco al padre por el lado izquierdo
                 padre = padreAux(aux.getIzquierdo(), hijo, padre);
                 // Si no lo encuentra, lo busco por derecha
-                if(padre == null){
+                if (padre == null) {
                     padre = padreAux(aux.getDerecho(), hijo, padre);
                 }
             }
@@ -99,4 +102,162 @@ public class ArbolBin {
 
         return padreElem;
     }
+
+    // ---- Altura ----
+    public int altura() {
+        int alt = -1;
+
+        // Si la raiz es nula, entonces el arbol esta vacio
+        if (this.raiz != null) {
+            // Calcula la altura del arbol -1 (ya que la raiz vale 0)
+            alt = alturaAux(this.raiz) - 1;
+        }
+
+        return alt;
+    }
+    private int alturaAux(NodoArbol aux) {
+        // alt representa la altura izquierda y altD la derecha
+        int alt = 0;
+        int altD = 0;
+
+        // Mientras aux no valga nulo (fin del arbol)
+        if (aux != null) {
+            // Cuento la altura por izquierda recursivamente
+            alt = alturaAux(aux.getIzquierdo()) + 1;
+
+            // Cuento la altura por derecha recursivamente
+            altD = alturaAux(aux.getDerecho()) + 1;
+
+            // Si la altura derecha es mas grande que la izquierda, entonces
+            // almaceno la derecha en izquierda
+            if (altD > alt) {
+                alt = altD;
+            }
+        }
+
+        return alt;
+    }
+
+    // ---- Nivel ----
+    public int nivel(Object elem) {
+        int niv = -1;
+
+        // Si el elemento enviado es valido y el arbol no esta vacio
+        if (elem != null && this.raiz != null) {
+            niv = nivelAux(this.raiz, elem, 0);
+        }
+
+        return niv;
+    }
+    private int nivelAux(NodoArbol aux, Object elem, int profundidad) {
+        int nivel = -1;
+
+        // Si aux no es nulo
+        if (aux != null) {
+            // Si encontre al elemento, entonces esta en la profundidad enviada
+            if (aux.getElem().equals(elem)) {
+                nivel = profundidad;
+            } else {
+                // Si no lo encuentro entonces recorro la izquierda aumentando la profundidad
+                nivel = nivelAux(aux.getIzquierdo(), elem, profundidad + 1);
+                // Si sigue siendo el nivel -1, quiere decir que no lo encontre en la izquierda
+                if (nivel == -1) {
+                    // Lo busco en la derecha
+                    nivel = nivelAux(aux.getDerecho(), elem, profundidad + 1);
+                }
+            }
+        }
+
+        return nivel;
+    }
+
+    // ---- Vaciar ----
+    public void vaciar(){
+        this.raiz = null;
+    }
+
+    // ---- Clone ----
+    public ArbolBin clone(){
+        ArbolBin clone = new ArbolBin();
+
+        if(this.raiz != null){
+            clone.raiz = cloneAux(this.raiz);
+        }
+
+        return clone;
+    }
+    private NodoArbol cloneAux(NodoArbol aux){
+        NodoArbol hijo = null;
+        if( aux != null){
+            hijo = new NodoArbol(aux.getElem(), cloneAux(aux.getIzquierdo()), cloneAux(aux.getDerecho()));
+        }
+        return hijo;
+    }
+
+    // ---- toString ----
+    public String toString(){
+        String enTexto = "[ ARBOL VACIO ]";
+
+        if(this.raiz != null){
+            enTexto = toStringAux(this.raiz);
+        }
+
+        return enTexto;
+    }
+    
+    private String toStringAux(NodoArbol aux){
+        String enTexto = "";
+        if(aux != null){
+            // enTexto += aux.getElem().toString() + ": " + "[ " + "HI: " + aux.getIzquierdo().getElem() + " HD: " + aux.getDerecho().getElem() + " ]";
+            enTexto += aux.getElem().toString() + "  HI: ";
+            if( aux.getIzquierdo() == null){
+                enTexto += " - ";
+            }else{
+                enTexto += aux.getIzquierdo().getElem().toString();
+            }
+            enTexto += "  HD: ";
+            if( aux.getDerecho() == null){
+                enTexto += " - ";
+            }else{
+                enTexto += aux.getDerecho().getElem().toString() ;
+            }
+            enTexto += "\n";
+            enTexto += toStringAux(aux.getIzquierdo());
+            enTexto += toStringAux(aux.getDerecho());
+        }
+
+        return enTexto;
+    }
+
+
+    // ====================
+    // ---- RECORRIDOS ----
+    // ====================
+
+    // ---- Preorden ----
+    public Lista preOrden() {
+        Lista lis = new Lista();
+
+        listaPreOrdenAux(this.raiz, lis);
+
+        return lis;
+    }
+    private void listaPreOrdenAux(NodoArbol aux, Lista lis) {
+        if (aux != null) {
+            // Visita el elemento en el primer nodo
+            lis.insertar(aux.getElem(), lis.longitud() + 1);
+
+            // Visita los hijos
+            listaPreOrdenAux(aux.getIzquierdo(), lis);
+            listaPreOrdenAux(aux.getDerecho(), lis);
+        }
+
+    }
+
+    // ---- Postorden ----
+
+    // ---- Inorden ----
+
+    //---- Por niveles ----
+
 }
