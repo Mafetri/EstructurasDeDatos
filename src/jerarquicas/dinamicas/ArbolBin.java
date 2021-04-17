@@ -292,5 +292,43 @@ public class ArbolBin {
     }
 
     // ---- Por niveles ----
+    public Lista listarNiveles() {
+        Cola cAux = new Cola();     // -> Alamcenara los nodos de los hijos del nodo que se esta analizando
+        Pila pAux = new Pila();     // -> Almacena los elementos de los nodos en el orden de niveles (raiz a hoja y de izq a der)
+        Lista lis = new Lista();    // -> Almacenara la los elementos de la pila en una lista y los retornara
+        NodoArbol nodo;
 
+        // Coloco en la cola el nodo raiz
+        cAux.poner(this.raiz);
+
+        //Mientras que la cola no este vacia voy a pilando los elementos de los hijos de los nodos analizados
+        while (!cAux.esVacia()) {
+            // Guardo en nodo el nodo que esta en el frente de la cola y lo saco de la cola
+            nodo = (NodoArbol)cAux.obtenerFrente();
+            cAux.sacar();
+
+            // Apilo en la pila el elemento del nodo que saque de la cola
+            pAux.apilar(nodo.getElem());
+
+            // Si existe un hijo izquierdo
+            if (nodo.getIzquierdo() != null){
+                // Lo coloco en la cola para que en el proximo loop, lo analize
+                cAux.poner(nodo.getIzquierdo());
+            }
+            // Si existe un hijo derecho
+            if (nodo.getDerecho() != null){
+                // Idem que izquierda
+                cAux.poner(nodo.getDerecho());
+            }
+        }
+
+        // Una vez que tengo en la pila los elementos en el orden de nivel
+        while (pAux.obtenerTope() != null) {
+            // Los desapilo y los inserto en la lista a retornar
+            lis.insertar(pAux.obtenerTope(), 1);
+            pAux.desapilar();
+        }
+
+        return lis;
+    }
 }
