@@ -69,7 +69,7 @@ public class ArbolBin {
     public boolean esVacio() {
         return this.raiz == null;
     }
-
+    
     // ---- Padre ----
     public Object padre(Object hijo) {
         Object padre = null;
@@ -172,54 +172,54 @@ public class ArbolBin {
     }
 
     // ---- Vaciar ----
-    public void vaciar(){
+    public void vaciar() {
         this.raiz = null;
     }
 
     // ---- Clone ----
-    public ArbolBin clone(){
+    public ArbolBin clone() {
         ArbolBin clone = new ArbolBin();
 
-        if(this.raiz != null){
+        if (this.raiz != null) {
             clone.raiz = cloneAux(this.raiz);
         }
 
         return clone;
     }
-    private NodoArbol cloneAux(NodoArbol aux){
+    private NodoArbol cloneAux(NodoArbol aux) {
         NodoArbol hijo = null;
-        if( aux != null){
+        if (aux != null) {
             hijo = new NodoArbol(aux.getElem(), cloneAux(aux.getIzquierdo()), cloneAux(aux.getDerecho()));
         }
         return hijo;
     }
 
     // ---- toString ----
-    public String toString(){
+    public String toString() {
         String enTexto = "[ ARBOL VACIO ]";
 
-        if(this.raiz != null){
+        if (this.raiz != null) {
             enTexto = toStringAux(this.raiz);
         }
 
         return enTexto;
     }
-    
-    private String toStringAux(NodoArbol aux){
+    private String toStringAux(NodoArbol aux) {
         String enTexto = "";
-        if(aux != null){
-            // enTexto += aux.getElem().toString() + ": " + "[ " + "HI: " + aux.getIzquierdo().getElem() + " HD: " + aux.getDerecho().getElem() + " ]";
+        if (aux != null) {
+            // enTexto += aux.getElem().toString() + ": " + "[ " + "HI: " +
+            // aux.getIzquierdo().getElem() + " HD: " + aux.getDerecho().getElem() + " ]";
             enTexto += aux.getElem().toString() + "  HI: ";
-            if( aux.getIzquierdo() == null){
+            if (aux.getIzquierdo() == null) {
                 enTexto += " - ";
-            }else{
+            } else {
                 enTexto += aux.getIzquierdo().getElem().toString();
             }
             enTexto += "  HD: ";
-            if( aux.getDerecho() == null){
+            if (aux.getDerecho() == null) {
                 enTexto += " - ";
-            }else{
-                enTexto += aux.getDerecho().getElem().toString() ;
+            } else {
+                enTexto += aux.getDerecho().getElem().toString();
             }
             enTexto += "\n";
             enTexto += toStringAux(aux.getIzquierdo());
@@ -228,11 +228,6 @@ public class ArbolBin {
 
         return enTexto;
     }
-
-
-    // ====================
-    // ---- RECORRIDOS ----
-    // ====================
 
     // ---- Preorden ----
     public Lista preOrden() {
@@ -258,6 +253,6 @@ public class ArbolBin {
 
     // ---- Inorden ----
 
-    //---- Por niveles ----
+    // ---- Por niveles ----
 
 }
