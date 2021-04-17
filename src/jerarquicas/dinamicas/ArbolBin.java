@@ -1,3 +1,15 @@
+/*
+=====================================
+|     Estructuras de Datos 2021     |
+=====================================
+|      Clase:                       |
+|       > Arbol Binario             |
+|      Alumno:                      |
+|        > Manuel Felipe Triñanes   |
+|        > FAI - 2738               |
+=====================================
+*/
+
 package jerarquicas.dinamicas;
 
 import lineales.dinamicas.*;
@@ -249,9 +261,35 @@ public class ArbolBin {
 
     }
 
-    // ---- Postorden ----
+    // ---- Posorden ----
+    public Lista posOrden(){
+        Lista lis = new Lista();
+        listaPosOrdenAux(this.raiz, lis);
+        return lis;
+    }
+    private void listaPosOrdenAux(NodoArbol aux, Lista lis){
+        if(aux != null){
+            lis.insertar(aux.getElem(), 1);
+            listaPosOrdenAux(aux.getDerecho(), lis);
+            listaPosOrdenAux(aux.getIzquierdo(), lis);
+        }
+    }
 
     // ---- Inorden ----
+    public Lista inOrden(){
+        Lista lis = new Lista();
+
+        listaInOrdenAux(this.raiz, lis);
+
+        return lis;
+    }
+    private void listaInOrdenAux(NodoArbol aux, Lista lis){
+        if(aux != null){
+            listaInOrdenAux(aux.getDerecho(), lis);
+            lis.insertar(aux.getElem(), 1);
+            listaInOrdenAux(aux.getIzquierdo(), lis);
+        }
+    }
 
     // ---- Por niveles ----
 
