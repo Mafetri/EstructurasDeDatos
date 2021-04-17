@@ -127,7 +127,7 @@ public class Lista {
             // encontrado), busco el objeto
             while (localizacion == -1 && i <= this.longitud && this.cabecera != null) {
                 // Si el elemento de aux es el buscado
-                if (aux.getElem() == elemento) {
+                if (aux.getElem().equals(elemento)) {
                     // Guardo esa posicion
                     localizacion = i;
                 } else {
@@ -283,18 +283,18 @@ public class Lista {
             Nodo aux = this.cabecera;
 
             for(int i = 1; i <= this.longitud; i++){
-                if(this.cabecera.getElem() == elemento){
+                if(this.cabecera.getElem().equals(elemento)){
                     this.cabecera = this.cabecera.getEnlace();
                     longitud--;
                     aux = this.cabecera;
                 }else{
                     if(aux.getEnlace().getEnlace() != null){
-                        if(aux.getEnlace().getElem() == elemento){
+                        if(aux.getEnlace().getElem().equals(elemento)){
                             aux.setEnlace(aux.getEnlace().getEnlace());
                             longitud--;
                         }
                     }else{
-                        if(aux.getEnlace().getElem() == elemento){
+                        if(aux.getEnlace().getElem().equals(elemento)){
                             aux.setEnlace(null);
                             longitud--;
                         }
