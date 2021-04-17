@@ -1,6 +1,6 @@
 package jerarquicas.dinamicas;
 
-public class NodoArbol {
+class NodoArbol {
     private Object elem;
     private NodoArbol izquierdo;
     private NodoArbol derecho;
