@@ -62,4 +62,41 @@ public class ArbolBin {
 
         return resultado;
     }
+
+    public boolean esVacio() {
+        return this.raiz == null;
+    }
+
+    public Object padre(Object hijo) {
+        Object padre = null;
+
+        // Si el arbol no esta vacio
+        if (this.raiz != null) {
+            // Busco a su padre desde la raiz
+            padre = padreAux(this.raiz, hijo, null);
+        }
+
+        return padre;
+    }
+
+    private Object padreAux(NodoArbol aux, Object hijo, Object padre) {
+        Object padreElem = null;
+
+        // Si el nodo enviado es valido
+        if(aux != null){
+            // Si el padre del hijo es el nodo enviado, entonces
+            if(aux.getElem().equals(hijo)){
+                padreElem = padre;
+            }else{
+                // Busco al padre por el lado izquierdo
+                padre = padreAux(aux.getIzquierdo(), hijo, padre);
+                // Si no lo encuentra, lo busco por derecha
+                if(padre == null){
+                    padre = padreAux(aux.getDerecho(), hijo, padre);
+                }
+            }
+        }
+
+        return padreElem;
+    }
 }
