@@ -294,9 +294,9 @@ public class ArbolBin {
     // ---- Por niveles ----
     public Lista listarNiveles() {
         Cola cAux = new Cola();     // -> Alamcenara los nodos de los hijos del nodo que se esta analizando
-        Pila pAux = new Pila();     // -> Almacena los elementos de los nodos en el orden de niveles (raiz a hoja y de izq a der)
-        Lista lis = new Lista();    // -> Almacenara la los elementos de la pila en una lista y los retornara
+        Lista lis = new Lista();    // -> Almacenara la los elementos en una lista y los retornara
         NodoArbol nodo;
+        int i = 1;
 
         // Coloco en la cola el nodo raiz
         cAux.poner(this.raiz);
@@ -307,8 +307,9 @@ public class ArbolBin {
             nodo = (NodoArbol)cAux.obtenerFrente();
             cAux.sacar();
 
-            // Apilo en la pila el elemento del nodo que saque de la cola
-            pAux.apilar(nodo.getElem());
+            // Alamaceno en la lista en la posicion i, el elemento del nodo
+            lis.insertar(nodo.getElem(), i);
+            i++;
 
             // Si existe un hijo izquierdo
             if (nodo.getIzquierdo() != null){
@@ -321,14 +322,6 @@ public class ArbolBin {
                 cAux.poner(nodo.getDerecho());
             }
         }
-
-        // Una vez que tengo en la pila los elementos en el orden de nivel
-        while (pAux.obtenerTope() != null) {
-            // Los desapilo y los inserto en la lista a retornar
-            lis.insertar(pAux.obtenerTope(), 1);
-            pAux.desapilar();
-        }
-
         return lis;
     }
 }
