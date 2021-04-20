@@ -324,4 +324,28 @@ public class ArbolBin {
         }
         return lis;
     }
+
+    // ---- Frontera ----
+    public Lista frontera() {
+        Lista lis = new Lista();
+
+        if(this.raiz != null){
+            fronteraAux(this.raiz, lis);
+        }
+
+        return lis;
+    }
+    private void fronteraAux(NodoArbol aux, Lista lis) {
+        if (aux != null) {
+            if(aux.getIzquierdo() == null && aux.getDerecho() == null){
+                // Visita el elemento en el primer nodo
+                lis.insertar(aux.getElem(), lis.longitud()+1);
+            }
+
+            // Visita los hijos
+            fronteraAux(aux.getIzquierdo(), lis);
+            fronteraAux(aux.getDerecho(), lis);
+        }
+
+    }
 }

@@ -37,5 +37,7 @@ public class TestArbol {
         System.out.println("InOrden: \n" + fam2.inOrden().toString());
         System.out.println("PosOrden: \n" + fam2.posOrden().toString());
         System.out.println("Por nivel: \n" + fam2.listarNiveles().toString());
+
+        System.out.println(fam2.frontera().toString());
     }
 }
