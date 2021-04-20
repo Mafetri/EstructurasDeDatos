@@ -245,7 +245,9 @@ public class ArbolBin {
     public Lista preOrden() {
         Lista lis = new Lista();
 
-        listaPreOrdenAux(this.raiz, lis);
+        if( this.raiz != null){
+            listaPreOrdenAux(this.raiz, lis);
+        }
 
         return lis;
     }
@@ -264,7 +266,11 @@ public class ArbolBin {
     // ---- Posorden ----
     public Lista posOrden(){
         Lista lis = new Lista();
-        listaPosOrdenAux(this.raiz, lis);
+
+        if( this.raiz != null){
+            listaPosOrdenAux(this.raiz, lis);
+        }
+        
         return lis;
     }
     private void listaPosOrdenAux(NodoArbol aux, Lista lis){
@@ -279,7 +285,9 @@ public class ArbolBin {
     public Lista inOrden(){
         Lista lis = new Lista();
 
-        listaInOrdenAux(this.raiz, lis);
+        if( this.raiz != null){
+            listaInOrdenAux(this.raiz, lis);
+        }
 
         return lis;
     }
