@@ -1,13 +1,12 @@
 /*
-=====================================
-|     Estructuras de Datos 2021     |
-=====================================
-|      Clase:                       |
-|       > Cola Dinamica             |
-|      Alumno:                      |
-|        > Manuel Felipe Triñanes   |
-|        > FAI - 2738               |
-=====================================
+=================================================
+|     Estructuras de Datos 2021                 |
+=================================================
+|      Clase:                                   |
+|       > Cola Dinamica                         |
+|      Alumnos:                                 |
+|        > Manuel Felipe Triñanes (FAI-2738)    |
+=================================================
 */
 
 package lineales.dinamicas;
@@ -66,13 +65,7 @@ public class Cola {
     // ---- Obtener Frente ----
     // Devuelve el frente de la cola
     public Object obtenerFrente() {
-        Object elemento = null;
-
-        if (this.frente != null) {
-            elemento = this.frente.getElem();
-        }
-
-        return elemento;
+        return this.frente.getElem();
     }
 
     // ---- Es Vacia? ----

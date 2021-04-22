@@ -3,3 +3,5 @@ src/test/lineales/TestLista.java
 .vscode/settings.json
 src/test/lineales/TestingCola.java
 src/test/lineales/TestingLista.java
+src/test/lineales/TestCadenas.java
+src/test/jerarquicas/TestBinario.java

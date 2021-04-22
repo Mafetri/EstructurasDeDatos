@@ -1,3 +1,13 @@
+/*
+=================================================
+|     Estructuras de Datos 2021                 |
+=================================================
+|      Clase:                                   |
+|       > Cola Estatica                         |
+|      Alumnos:                                 |
+|        > Manuel Felipe Triñanes (FAI-2738)    |
+=================================================
+*/
 
 package lineales.estaticas;
 
@@ -58,7 +68,7 @@ public class Cola {
         Object elFrente = null;
 
         if (this.frente != this.fin) {
-            elFrente = arreglo[frente];
+            elFrente = arreglo[this.frente];
         }
 
         return elFrente;
@@ -73,7 +83,10 @@ public class Cola {
     // ---- Vaciar ----
     // Vacia la cola
     public void vaciar() {
-        this.arreglo = null;
+        while(this.frente%TAMANIO != this.fin) {
+            arreglo[this.frente] = null;
+            this.frente = (this.frente+1)%TAMANIO;
+        }
         this.fin = 0;
         this.frente = 0;
     }
@@ -82,11 +95,10 @@ public class Cola {
     // Devuelve una cola clonada de la original
     public Cola clone() {
         Cola clonada = new Cola();
-        int fin = this.frente;
 
-        while(this.fin != fin){
-            clonada.arreglo[fin] = this.arreglo[fin];
-            fin = (fin+1) % TAMANIO;
+        while(this.frente%TAMANIO != this.fin){
+            clonada.arreglo[this.frente] = this.arreglo[this.frente];
+            this.frente = (this.frente+1) % TAMANIO;
         }
 
         clonada.fin = this.fin;

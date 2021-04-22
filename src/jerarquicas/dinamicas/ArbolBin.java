@@ -1,13 +1,12 @@
 /*
-=====================================
-|     Estructuras de Datos 2021     |
-=====================================
-|      Clase:                       |
-|       > Arbol Binario             |
-|      Alumno:                      |
-|        > Manuel Felipe Triñanes   |
-|        > FAI - 2738               |
-=====================================
+=================================================
+|     Estructuras de Datos 2021                 |
+=================================================
+|      Clase:                                   |
+|       > Cola Estatica                         |
+|      Alumnos:                                 |
+|        > Manuel Felipe Triñanes (FAI-2738)    |
+=================================================
 */
 
 package jerarquicas.dinamicas;
@@ -17,6 +16,7 @@ import lineales.dinamicas.*;
 public class ArbolBin {
     private NodoArbol raiz;
 
+    // ---- Constructor ----
     public ArbolBin() {
         this.raiz = null;
     }
@@ -104,10 +104,10 @@ public class ArbolBin {
                 padreElem = padre;
             } else {
                 // Busco al padre por el lado izquierdo
-                padre = padreAux(aux.getIzquierdo(), hijo, padre);
+                padreElem = padreAux(aux.getIzquierdo(), hijo, aux.getElem());
                 // Si no lo encuentra, lo busco por derecha
-                if (padre == null) {
-                    padre = padreAux(aux.getDerecho(), hijo, padre);
+                if (padreElem == null) {
+                    padreElem = padreAux(aux.getDerecho(), hijo, aux.getElem());
                 }
             }
         }
@@ -199,11 +199,15 @@ public class ArbolBin {
         return clone;
     }
     private NodoArbol cloneAux(NodoArbol aux) {
-        NodoArbol hijo = null;
+        NodoArbol clonado = null;
+
+        // Si el aux no es nulo
         if (aux != null) {
-            hijo = new NodoArbol(aux.getElem(), cloneAux(aux.getIzquierdo()), cloneAux(aux.getDerecho()));
+            // Guardo en clonado un nuevo nodo con el elemento actual y sus hijos clonados recursivos
+            clonado = new NodoArbol(aux.getElem(), cloneAux(aux.getIzquierdo()), cloneAux(aux.getDerecho()));
         }
-        return hijo;
+        
+        return clonado;
     }
 
     // ---- toString ----
@@ -219,8 +223,6 @@ public class ArbolBin {
     private String toStringAux(NodoArbol aux) {
         String enTexto = "";
         if (aux != null) {
-            // enTexto += aux.getElem().toString() + ": " + "[ " + "HI: " +
-            // aux.getIzquierdo().getElem() + " HD: " + aux.getDerecho().getElem() + " ]";
             enTexto += aux.getElem().toString() + "  HI: ";
             if (aux.getIzquierdo() == null) {
                 enTexto += " - ";
@@ -242,94 +244,97 @@ public class ArbolBin {
     }
 
     // ---- Preorden ----
-    public Lista preOrden() {
+    public Lista listarPreorden() {
         Lista lis = new Lista();
 
         if( this.raiz != null){
-            listaPreOrdenAux(this.raiz, lis);
+            preordenAux(this.raiz, lis);
         }
 
         return lis;
     }
-    private void listaPreOrdenAux(NodoArbol aux, Lista lis) {
+    private void preordenAux(NodoArbol aux, Lista lis) {
         if (aux != null) {
-            // Visita el elemento en el primer nodo
+            // Guardo en la lista el elemento
             lis.insertar(aux.getElem(), lis.longitud() + 1);
 
             // Visita los hijos
-            listaPreOrdenAux(aux.getIzquierdo(), lis);
-            listaPreOrdenAux(aux.getDerecho(), lis);
+            preordenAux(aux.getIzquierdo(), lis);
+            preordenAux(aux.getDerecho(), lis);
         }
 
     }
 
     // ---- Posorden ----
-    public Lista posOrden(){
+    public Lista listarPosorden(){
         Lista lis = new Lista();
 
         if( this.raiz != null){
-            listaPosOrdenAux(this.raiz, lis);
+            posordenAux(this.raiz, lis);
         }
         
         return lis;
     }
-    private void listaPosOrdenAux(NodoArbol aux, Lista lis){
+    private void posordenAux(NodoArbol aux, Lista lis){
         if(aux != null){
             lis.insertar(aux.getElem(), 1);
-            listaPosOrdenAux(aux.getDerecho(), lis);
-            listaPosOrdenAux(aux.getIzquierdo(), lis);
+            posordenAux(aux.getDerecho(), lis);
+            posordenAux(aux.getIzquierdo(), lis);
         }
     }
 
     // ---- Inorden ----
-    public Lista inOrden(){
+    public Lista listarInorden(){
         Lista lis = new Lista();
 
         if( this.raiz != null){
-            listaInOrdenAux(this.raiz, lis);
+            inordenAux(this.raiz, lis);
         }
 
         return lis;
     }
-    private void listaInOrdenAux(NodoArbol aux, Lista lis){
+    private void inordenAux(NodoArbol aux, Lista lis){
         if(aux != null){
-            listaInOrdenAux(aux.getDerecho(), lis);
+            inordenAux(aux.getDerecho(), lis);
             lis.insertar(aux.getElem(), 1);
-            listaInOrdenAux(aux.getIzquierdo(), lis);
+            inordenAux(aux.getIzquierdo(), lis);
         }
     }
 
     // ---- Por niveles ----
-    public Lista listarNiveles() {
-        Cola cAux = new Cola();     // -> Alamcenara los nodos de los hijos del nodo que se esta analizando
+    public Lista listarPorNiveles() {
+        Cola cAux = new Cola();     // -> Alamcenara los nodos a analizar
         Lista lis = new Lista();    // -> Almacenara la los elementos en una lista y los retornara
         NodoArbol nodo;
         int i = 1;
 
-        // Coloco en la cola el nodo raiz
-        cAux.poner(this.raiz);
+        if(this.raiz != null){
+            // Coloco en la cola el nodo raiz
+            cAux.poner(this.raiz);
 
-        //Mientras que la cola no este vacia voy a pilando los elementos de los hijos de los nodos analizados
-        while (!cAux.esVacia()) {
-            // Guardo en nodo el nodo que esta en el frente de la cola y lo saco de la cola
-            nodo = (NodoArbol)cAux.obtenerFrente();
-            cAux.sacar();
+            //Mientras que la cola no este vacia voy a pilando los elementos de los hijos de los nodos analizados
+            while (!cAux.esVacia()) {
+                // Guardo en nodo el nodo que esta en el frente de la cola y lo saco de la cola
+                nodo = (NodoArbol)cAux.obtenerFrente();
+                cAux.sacar();
 
-            // Alamaceno en la lista en la posicion i, el elemento del nodo
-            lis.insertar(nodo.getElem(), i);
-            i++;
+                // Alamaceno en la lista en la posicion i, el elemento del nodo
+                lis.insertar(nodo.getElem(), i);
+                i++;
 
-            // Si existe un hijo izquierdo
-            if (nodo.getIzquierdo() != null){
-                // Lo coloco en la cola para que en el proximo loop, lo analize
-                cAux.poner(nodo.getIzquierdo());
-            }
-            // Si existe un hijo derecho
-            if (nodo.getDerecho() != null){
-                // Idem que izquierda
-                cAux.poner(nodo.getDerecho());
+                // Si existe un hijo izquierdo
+                if (nodo.getIzquierdo() != null){
+                    // Lo coloco en la cola para que en el proximo loop, lo analize
+                    cAux.poner(nodo.getIzquierdo());
+                }
+                // Si existe un hijo derecho
+                if (nodo.getDerecho() != null){
+                    // Idem que izquierda
+                    cAux.poner(nodo.getDerecho());
+                }
             }
         }
+        
         return lis;
     }
 
@@ -345,8 +350,9 @@ public class ArbolBin {
     }
     private void fronteraAux(NodoArbol aux, Lista lis) {
         if (aux != null) {
+            // Si el nodo no tiene hijos
             if(aux.getIzquierdo() == null && aux.getDerecho() == null){
-                // Visita el elemento en el primer nodo
+                // Lo guardo en la lista
                 lis.insertar(aux.getElem(), lis.longitud()+1);
             }
 
