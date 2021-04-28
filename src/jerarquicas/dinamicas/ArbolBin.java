@@ -3,7 +3,7 @@
 |     Estructuras de Datos 2021                 |
 =================================================
 |      Clase:                                   |
-|       > Cola Estatica                         |
+|       > Arbol Binario                         |
 |      Alumnos:                                 |
 |        > Manuel Felipe Triñanes (FAI-2738)    |
 =================================================
@@ -361,5 +361,63 @@ public class ArbolBin {
             fronteraAux(aux.getDerecho(), lis);
         }
 
+    }
+
+    // ---- Clone Invertido ----
+    public ArbolBin cloneInvertido() {
+        ArbolBin clone = new ArbolBin();
+
+        if (this.raiz != null) {
+            clone.raiz = cloneInvertidoAux(this.raiz);
+        }
+
+        return clone;
+    }
+    private NodoArbol cloneInvertidoAux(NodoArbol aux) {
+        NodoArbol clonado = null;
+
+        // Si el aux no es nulo
+        if (aux != null) {
+            // Guardo en clonado un nuevo nodo con el elemento actual y sus hijos clonados recursivos
+            clonado = new NodoArbol(aux.getElem(), cloneInvertidoAux(aux.getDerecho()), cloneInvertidoAux(aux.getIzquierdo()));
+        }
+        
+        return clonado;
+    }
+
+    // ---- Verificar Patron ----
+    public boolean verificarPatron(Lista patron){
+        boolean coincide = false;
+
+        if(this.raiz != null && patron.recuperar(1).equals(this.raiz.getElem())){
+            coincide = verificarPatronAux(patron, this.raiz, 1);
+        }
+        
+        return coincide;
+    }
+    private boolean verificarPatronAux(Lista lista, NodoArbol nodo, int pos){
+        boolean controlIzq = false;
+        boolean control = true;
+
+        if (pos <= lista.longitud()) {
+            if (nodo != null) {
+                // Si el nodo actual es igual al elemento de la lista, entonces
+                // control se hace true y analizo por izquierda
+                if (nodo.getElem().equals(lista.recuperar(pos))) {
+                    control = true;
+                    controlIzq = verificarPatronAux(lista, nodo.getIzquierdo(), pos + 1);
+                } else {
+                    control = false;
+                }
+                // Si izquierda es falso y control es true, analizo por derecha
+                if (!controlIzq && control) {
+                    // Si por derecha tambien es falso, entonces control termina siendo false
+                    control = verificarPatronAux(lista, nodo.getDerecho(), pos + 1);
+                }
+            } else {
+                control = false;
+            }
+        }
+        return control;
     }
 }
