@@ -95,10 +95,11 @@ public class Cola {
     // Devuelve una cola clonada de la original
     public Cola clone() {
         Cola clonada = new Cola();
+        int fin = this.frente;
 
-        while(this.frente%TAMANIO != this.fin){
-            clonada.arreglo[this.frente] = this.arreglo[this.frente];
-            this.frente = (this.frente+1) % TAMANIO;
+        while(this.fin != fin){
+            clonada.arreglo[fin] = this.arreglo[fin];
+            fin = (fin+1) % TAMANIO;
         }
 
         clonada.fin = this.fin;

@@ -65,7 +65,13 @@ public class Cola {
     // ---- Obtener Frente ----
     // Devuelve el frente de la cola
     public Object obtenerFrente() {
-        return this.frente.getElem();
+        Object elemento = null;
+
+        if (this.frente != null) {
+            elemento = this.frente.getElem();
+        }
+
+        return elemento;
     }
 
     // ---- Es Vacia? ----

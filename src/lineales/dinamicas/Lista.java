@@ -125,7 +125,7 @@ public class Lista {
             // Mientras i sea mas chico o igual a longitud y la cabecera no sea nulla
             // (osea que la lista esta vacia) y que localizacion sea -1 (todavia no fue
             // encontrado), busco el objeto
-            while (localizacion == -1 && i <= this.longitud && this.cabecera != null) {
+            while (localizacion == -1 && i <= this.longitud) {
                 // Si el elemento de aux es el buscado
                 if (aux.getElem().equals(elemento)) {
                     // Guardo esa posicion
