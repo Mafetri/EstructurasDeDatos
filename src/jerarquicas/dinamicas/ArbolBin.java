@@ -388,8 +388,9 @@ public class ArbolBin {
     // ---- Verificar Patron ----
     public boolean verificarPatron(Lista patron){
         boolean coincide = false;
-
-        if(this.raiz != null && patron.recuperar(1).equals(this.raiz.getElem())){
+        if(this.raiz == null && patron.esVacia()){
+            coincide = true;
+        }else{
             coincide = verificarPatronAux(patron, this.raiz, 1);
         }
         
@@ -419,5 +420,34 @@ public class ArbolBin {
             }
         }
         return control;
+    }
+    
+    //---- Justificar ----
+    public Lista justificar(){
+        Lista lis = new Lista();
+        if(this.raiz != null){
+            lis = justificarAux(this.raiz);
+        }
+        return lis;
+    }
+    public Lista justificarAux(NodoArbol aux){
+        Lista retorno = new Lista();
+        Lista izq;
+        Lista der;
+
+        if(aux != null){
+            izq = justificarAux(aux.getIzquierdo());
+            der = justificarAux(aux.getDerecho());
+    
+            if(izq.longitud() > der.longitud()){
+                izq.insertar(aux.getElem(), 1);
+                retorno = izq;
+            }else{
+                der.insertar(aux.getElem(), 1);
+                retorno = der;
+            }
+        }
+
+        return retorno;
     }
 }
