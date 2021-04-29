@@ -7,6 +7,7 @@ public class TestCadenas {
     public static void main(String[] args) {
         Cola c1 = new Cola();
         Cola c2 = new Cola();
+        Cola c3 = new Cola();
 
         c1.poner('A');
         c1.poner('B');
@@ -16,7 +17,13 @@ public class TestCadenas {
         c1.poner('D');
         c1.poner('E');
         c1.poner('F');
-        System.out.println(generar(c1).toString());
+
+
+        c3 = c1.clone();
+        c1.vaciar();
+        System.out.println(c1.toString());
+        System.out.println(c3.toString());
+        System.out.println(c3.obtenerFrente());
 
         c2.poner('{');
         c2.poner('5');
@@ -37,6 +44,8 @@ public class TestCadenas {
         c2.poner('-');
         c2.poner('1');
         c2.poner('}');
+
+        System.out.println(verificarBalanceo(c2));
     }
 
     public static Cola generar(Cola c1) {
@@ -83,4 +92,46 @@ public class TestCadenas {
         return aRetornar;
     }
 
+    public static boolean verificarBalanceo(Cola q){
+        int cantIguales = 0;
+        Lista lAux = new Lista();
+        Pila pAux = new Pila();
+
+        while(!q.esVacia()){
+            if((char)q.obtenerFrente() == '{' || (char)q.obtenerFrente() == '}'|| (char)q.obtenerFrente() == '('|| (char)q.obtenerFrente() == ')' || (char)q.obtenerFrente() == '['|| (char)q.obtenerFrente() == ']'){
+                lAux.insertar(q.obtenerFrente(), 1);
+            }
+            q.sacar();
+        }
+        int longitud = lAux.longitud();
+        
+        if(longitud % 2 == 0){
+            for(int i = longitud; i > longitud / 2; i--){
+                pAux.apilar(lAux.recuperar(i));
+                lAux.eliminar(i);
+            }
+            int i = longitud / 2;
+            while(i > 0 && (char)lAux.recuperar(i) == invertido((char)pAux.obtenerTope())){
+                cantIguales++;
+                i--;
+                pAux.desapilar();
+            }
+        }
+        return cantIguales == longitud/2;
+    }
+    public static char invertido(char elem){
+        char retorno = '-';
+
+        if(elem == '{'){
+            retorno = '}';
+        }
+        if(elem == '('){
+            retorno = ')';
+        }
+        if(elem == '['){
+            retorno = ']';
+        }
+
+        return retorno;
+    }
 }
