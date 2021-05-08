@@ -8,6 +8,7 @@ public class TestCadenas {
         Cola c1 = new Cola();
         Cola c2 = new Cola();
         Cola c3 = new Cola();
+        Pila p1 = new Pila();
 
         c1.poner('A');
         c1.poner('B');
@@ -17,7 +18,6 @@ public class TestCadenas {
         c1.poner('D');
         c1.poner('E');
         c1.poner('F');
-
 
         c3 = c1.clone();
         c1.vaciar();
@@ -46,6 +46,23 @@ public class TestCadenas {
         c2.poner('}');
 
         System.out.println(verificarBalanceo(c2));
+
+        p1.apilar('R');
+        p1.apilar('T');
+        p1.apilar('Z');
+        p1.apilar('@');
+        p1.apilar('T');
+        p1.apilar('Y');
+        p1.apilar('@');
+        p1.apilar('Z');
+        p1.apilar('R');
+        p1.apilar('@');
+        p1.apilar('W');
+        p1.apilar('Y');
+        p1.apilar('X');
+
+        System.out.println(p1.toString());
+        System.out.println(formarLista(p1).toString());
     }
 
     public static Cola generar(Cola c1) {
@@ -92,46 +109,82 @@ public class TestCadenas {
         return aRetornar;
     }
 
-    public static boolean verificarBalanceo(Cola q){
+    public static boolean verificarBalanceo(Cola q) {
         int cantIguales = 0;
         Lista lAux = new Lista();
         Pila pAux = new Pila();
 
-        while(!q.esVacia()){
-            if((char)q.obtenerFrente() == '{' || (char)q.obtenerFrente() == '}'|| (char)q.obtenerFrente() == '('|| (char)q.obtenerFrente() == ')' || (char)q.obtenerFrente() == '['|| (char)q.obtenerFrente() == ']'){
+        while (!q.esVacia()) {
+            if ((char) q.obtenerFrente() == '{' || (char) q.obtenerFrente() == '}' || (char) q.obtenerFrente() == '('
+                    || (char) q.obtenerFrente() == ')' || (char) q.obtenerFrente() == '['
+                    || (char) q.obtenerFrente() == ']') {
                 lAux.insertar(q.obtenerFrente(), 1);
             }
             q.sacar();
         }
         int longitud = lAux.longitud();
-        
-        if(longitud % 2 == 0){
-            for(int i = longitud; i > longitud / 2; i--){
+
+        if (longitud % 2 == 0) {
+            for (int i = longitud; i > longitud / 2; i--) {
                 pAux.apilar(lAux.recuperar(i));
                 lAux.eliminar(i);
             }
             int i = longitud / 2;
-            while(i > 0 && (char)lAux.recuperar(i) == invertido((char)pAux.obtenerTope())){
+            while (i > 0 && (char) lAux.recuperar(i) == invertido((char) pAux.obtenerTope())) {
                 cantIguales++;
                 i--;
                 pAux.desapilar();
             }
         }
-        return cantIguales == longitud/2;
+        return cantIguales == longitud / 2;
     }
-    public static char invertido(char elem){
+
+    public static char invertido(char elem) {
         char retorno = '-';
 
-        if(elem == '{'){
+        if (elem == '{') {
             retorno = '}';
         }
-        if(elem == '('){
+        if (elem == '(') {
             retorno = ')';
         }
-        if(elem == '['){
+        if (elem == '[') {
             retorno = ']';
         }
 
         return retorno;
     }
+
+    // ------------ PARCIAL ------------
+    public static Lista formarLista(Pila pila1){
+        Lista lAux = new Lista();
+        Pila pAux = new Pila();
+        int cantCadenas = 1;
+
+        while(!pila1.esVacia()){
+            lAux.insertar(pila1.obtenerTope(), 1);
+            pila1.desapilar();
+        }
+
+        for(int i = 1; i <= lAux.longitud(); i++){
+            
+            if((char)lAux.recuperar(i) == '@'){
+                cantCadenas++;
+                i++;
+                if(cantCadenas % 2 == 0){
+                    while(lAux.recuperar(i) == null|| (char)lAux.recuperar(i) != '@'){
+                        pAux.apilar(lAux.recuperar(i));
+                        lAux.eliminar(i);
+                    }
+                    while(!pAux.esVacia()){
+                        lAux.insertar(pAux.obtenerTope(), i);
+                        pAux.desapilar();
+                        i++;
+                    }
+                }
+            }
+        }
+        return lAux;
+    }
+
 }
