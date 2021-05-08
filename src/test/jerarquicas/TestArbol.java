@@ -1,12 +1,14 @@
 package test.jerarquicas;
 
 import jerarquicas.dinamicas.*;
+import lineales.dinamicas.*;
 
 public class TestArbol {
     public static void main(String[] args) {
         // ARBOL FAM: https://imgur.com/a/byUNAhM
         ArbolBin fam = new ArbolBin();
         ArbolBin fam2 = new ArbolBin();
+        Lista fam3 = new Lista();
 
         fam.insertar("Hector", "p", 'z');
         fam.insertar("Jorge", "Hector", 'I');
@@ -16,6 +18,7 @@ public class TestArbol {
         fam.insertar("Jack", "Manuel", 'I');
         fam.insertar("Curie", "Lucia", 'D');
         fam.insertar("Rocco", "Lucia", 'I');
+        fam.insertar("Rodrigo", "Alfredo", 'I');
         fam.insertar("Rodrigo", "Alfredo", 'I');
         
         fam2 = fam.clone();
@@ -33,11 +36,23 @@ public class TestArbol {
 
         System.out.println("\n");
 
-        System.out.println("PreOrden: \n" + fam2.preOrden().toString());
-        System.out.println("InOrden: \n" + fam2.inOrden().toString());
-        System.out.println("PosOrden: \n" + fam2.posOrden().toString());
-        System.out.println("Por nivel: \n" + fam2.listarNiveles().toString());
+        System.out.println("PreOrden: \n" + fam2.listarPreorden().toString());
+        System.out.println("InOrden: \n" + fam2.listarInorden().toString());
+        System.out.println("PosOrden: \n" + fam2.listarPosorden().toString());
+        System.out.println("Por nivel: \n" + fam2.listarPorNiveles().toString());
 
         System.out.println(fam2.frontera().toString());
+
+        fam3.insertar("Hector", 1);
+        fam3.insertar("Jorge", 2);
+        fam3.insertar("Manuel", 3);
+        fam3.insertar("Rocco", 4);
+        
+        System.out.println(fam2.verificarPatron(fam3));
+
+        System.out.println(fam2.justificar().toString());
+
+        fam2.cambiarHijos("Herberto", "Jose", "Jorge");
+        System.out.println(fam2.toString());
     }
 }
