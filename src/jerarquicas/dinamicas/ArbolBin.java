@@ -450,4 +450,32 @@ public class ArbolBin {
 
         return retorno;
     }
+
+    //---- Cabiar Hijos ----
+    public void cambiarHijos(Object p, Object izq, Object der){
+        if(this.raiz != null){
+            cambiarHijosAux(p, izq, der, this.raiz);
+        }
+    }
+    private void cambiarHijosAux(Object p, Object izq, Object der, NodoArbol nodo){
+        if(nodo != null){
+            if(nodo.getElem().equals(p)){
+                if(nodo.getIzquierdo() != null){
+                    nodo.getIzquierdo().setElem(izq);
+                }else{
+                    NodoArbol nuevoIzq = new NodoArbol(izq, null, null);
+                    nodo.setIzquierdo(nuevoIzq);
+                }
+                if(nodo.getDerecho() != null){
+                    nodo.getDerecho().setElem(der);
+                }else{
+                    NodoArbol nuevoDer = new NodoArbol(der, null, null);
+                    nodo.setDerecho(nuevoDer);
+                }
+            }else{
+                cambiarHijosAux(p, izq, der, nodo.getIzquierdo());
+                cambiarHijosAux(p, izq, der, nodo.getDerecho());
+            }
+        }
+    }
 }
