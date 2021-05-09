@@ -39,8 +39,7 @@ public class ArbolGen {
             }
         }
         return exito;
-    }
-
+    }   
     private NodoGen buscarPadre(NodoGen nodo, Object elemPadre) {
         NodoGen padre = null;
         if (nodo != null) {
@@ -77,7 +76,6 @@ public class ArbolGen {
         }
         return lis;
     }
-
     private boolean ancestrosAux(Object elem, Lista lis, NodoGen nodo) {
         boolean exito = false;
 
@@ -116,7 +114,6 @@ public class ArbolGen {
 
         return alt;
     }
-
     private int alturaAux(NodoGen nodo) {
         int alt = 0;
         int altD = 0;
@@ -171,6 +168,37 @@ public class ArbolGen {
         }
         return niv;
     }
+
+    // ---- Buscar Padre ----
+    public Object padre(Object elem){
+        Object aRetornar = null;
+
+        if(this.raiz != null){
+            aRetornar = padreAux(elem,null,this.raiz);
+        }
+
+        return aRetornar;
+    }
+    private Object padreAux(Object hijo, Object padre, NodoGen nodo){
+        Object padreElem = null;
+
+        if(nodo != null){
+            if(nodo.getElem().equals(hijo)){
+                padreElem = padre;
+            }else{
+                // Sino busco en los hermanos derechos
+                padreElem = padreAux(hijo, padre, nodo.getHermanoDerecho());
+
+                // Si padre sigue siendo nulo entonces busco en el proximo nivel (los hijos)
+                if (padreElem == null) {
+                    padreElem = padreAux(hijo,nodo.getElem(),nodo.getHijoIzquierdo());
+                }
+            }
+        }
+
+        return padreElem;
+    }
+
 
     // ---- Recorridos ----
 
