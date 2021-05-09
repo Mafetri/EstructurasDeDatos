@@ -58,6 +58,17 @@ public class ArbolGen {
         return padre;
     }
 
+    // ---- Pertenece ----
+    public boolean pertenece(Object elem){
+        boolean exito = false;
+        if(buscarPadre(this.raiz, elem) != null){
+            exito = true;
+        }
+        return exito;
+    }
+
+    // ----
+
     // ---- Recorridos ----
 
     // ---- Inorden ----
@@ -68,7 +79,6 @@ public class ArbolGen {
         }
         return aRetornar;
     }
-
     private void listarInordenAux(NodoGen nodo, Lista ls) {
         if (nodo != null) {
             // Mientras el hijo izquierdo no sea nulo, llamo recursivamente con el hijo
@@ -95,7 +105,6 @@ public class ArbolGen {
     public String toString() {
         return toStringAux(this.raiz);
     }
-
     private String toStringAux(NodoGen nodo) {
         String enTexto = "";
 
