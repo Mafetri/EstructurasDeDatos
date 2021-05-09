@@ -61,13 +61,45 @@ public class ArbolGen {
     // ---- Pertenece ----
     public boolean pertenece(Object elem){
         boolean exito = false;
-        if(buscarPadre(this.raiz, elem) != null){
+        if(this.raiz != null && buscarPadre(this.raiz, elem) != null){
             exito = true;
         }
         return exito;
     }
 
-    // ----
+    // ---- Ancestros ----
+    public Lista ancestros(Object elem){
+        Lista lis = new Lista();
+        // Si el arbol no esta vacio y el primer elemento no es el elemento buscado
+        if(this.raiz != null && !this.raiz.getElem().equals(elem)){
+            ancestrosAux(elem, lis, this.raiz);
+        }
+        return lis;
+    }
+    private boolean ancestrosAux(Object elem, Lista lis, NodoGen nodo){
+        boolean exito = false;
+
+        if(nodo != null){
+            // Si el elemento buscado es el nodo actual, la busqueda fue exitosa
+            if( nodo.getElem().equals(elem)){
+                exito = true;
+            }else{
+                // Si no lo fue, busco en su hijo si es exitosa
+                exito = ancestrosAux(elem, lis, nodo.getHijoIzquierdo());
+                if(exito){
+                    // Si fue encontrado en si hijo lo agrego a la lista
+                    lis.insertar(nodo.getElem(), lis.longitud() + 1);
+                }else{
+                    // Sino busco entre sus hermanos
+                    exito = ancestrosAux(elem, lis, nodo.getHermanoDerecho());
+                }
+            }
+        }
+
+        return exito;
+    }
+
+    // ---- Es Vacio ----
 
     // ---- Recorridos ----
 
