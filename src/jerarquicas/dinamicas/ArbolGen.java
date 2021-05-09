@@ -100,6 +100,47 @@ public class ArbolGen {
     }
 
     // ---- Es Vacio ----
+    public boolean esVacio(){
+        return this.raiz == null;
+    }
+
+    // ---- Altura ----
+    public int altura(){
+        int alt = -1;
+
+        if(this.raiz != null){
+            alt = alturaAux(this.raiz);
+        }
+
+        return alt;
+    }
+    private int alturaAux(NodoGen nodo){
+        int alt = 0;
+        int altD = 0;
+
+        if(nodo != null){
+            // Profundizo por izquierda
+            alt = alturaAux(nodo.getHijoIzquierdo()) + 1;
+
+            // Ahora profundizo a traves de los hermanos    
+            while(nodo.getHermanoDerecho() != null){
+                // Apunto el nodo al hermano
+                nodo = nodo.getHermanoDerecho();
+
+                // Si tiene un hijo profundizo
+                if(nodo.getHijoIzquierdo() != null){
+                    altD = alturaAux(nodo.getHijoIzquierdo()) + 1;
+                }
+            }
+
+            // Si la altura a traves de los hermanos es mas alta que la de la izq
+            if(altD > alt){
+                alt = altD;
+            }
+        }
+
+        return alt;
+    }
 
     // ---- Recorridos ----
 
