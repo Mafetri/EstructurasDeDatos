@@ -37,6 +37,8 @@ public class ArbolGen {
                 }
                 exito = true;
             }
+        }else{
+            this.raiz = nuevo;
         }
         return exito;
     }   
@@ -44,14 +46,14 @@ public class ArbolGen {
         NodoGen padre = null;
         if (nodo != null) {
             // Si el nodo es el padre buscado, guardo en padre este nodo
-            if (nodo.getElem().equals(padre)) {
+            if (nodo.getElem().equals(elemPadre)) {
                 padre = nodo;
             } else {
                 // Sino busco en los hermanos derechos
-                padre = buscarPadre(nodo.getHermanoDerecho(), padre);
+                padre = buscarPadre(nodo.getHermanoDerecho(), elemPadre);
                 // Si padre sigue siendo nulo entonces busco en el proximo nivel (los hijos)
                 if (padre == null) {
-                    padre = buscarPadre(nodo.getHijoIzquierdo(), padre);
+                    padre = buscarPadre(nodo.getHijoIzquierdo(), elemPadre);
                 }
             }
         }
@@ -146,30 +148,26 @@ public class ArbolGen {
     public int nivel(Object elem) {
         int niv = -1;
         if (this.raiz != null) {
-            niv = nivelAux(this.raiz, elem);
+            niv = nivelAux(this.raiz, elem, 0);
         }
         return niv;
     }
-    private int nivelAux(NodoGen nodo, Object elem) {
-        int niv = -1;
+    private int nivelAux(NodoGen nodo, Object elem, int profundidad) {
+        int nivel = -1;
         if (nodo != null) {
             if (nodo.getElem().equals(elem)) {
-                niv = 0;
+                nivel = profundidad;
             } else {
-                // Busco entre los hermanos sin aumentar el nivel, ya que estoy en el mismo
-                niv = nivelAux(nodo.getHermanoDerecho(), elem);
-
-                // Si todavia no lo encontro osea que nivel sigue siendo -1
-                if (niv == -1) {
-                    // Bajo de nivel y busco en el hijo
-                    niv = nivelAux(nodo.getHijoIzquierdo(), elem) + 1;          
+                nivel = nivelAux(nodo.getHermanoDerecho(), elem, profundidad);
+                if (nivel == -1) {
+                    nivel = nivelAux(nodo.getHijoIzquierdo(), elem, profundidad+1);
                 }
             }
         }
-        return niv;
+        return nivel;
     }
 
-    // ---- Buscar Padre ----
+    // ---- Padre ----
     public Object padre(Object elem){
         Object aRetornar = null;
 
@@ -202,6 +200,34 @@ public class ArbolGen {
 
     // ---- Recorridos ----
 
+    // ---- Preorden ----
+    public Lista listarPreorden() {
+        Lista lis = new Lista();
+        if(this.raiz != null){
+            listarPreordenAux(this.raiz, lis);
+        }
+        return lis;
+    }
+    private void listarPreordenAux(NodoGen nodo, Lista lis){
+        if(nodo != null){
+            // Guardo el elemento en la lista
+            lis.insertar(nodo.getElem(), lis.longitud() + 1);
+
+            // Si tiene hijos
+            if(nodo.getHijoIzquierdo() != null){
+                // Hago un paso recursivo con el hijo izquierdo
+                listarPreordenAux(nodo.getHijoIzquierdo(), lis);
+
+                // Luego visito a los hijos hermanos
+                NodoGen hijo = nodo.getHijoIzquierdo().getHermanoDerecho();
+                while (hijo != null) {
+                    listarPreordenAux(hijo, lis);
+                    hijo = hijo.getHermanoDerecho();
+                }
+            }
+        }
+    }
+
     // ---- Inorden ----
     public Lista listarInorden() {
         Lista aRetornar = new Lista();
@@ -210,7 +236,6 @@ public class ArbolGen {
         }
         return aRetornar;
     }
-
     private void listarInordenAux(NodoGen nodo, Lista ls) {
         if (nodo != null) {
             // Mientras el hijo izquierdo no sea nulo, llamo recursivamente con el hijo
@@ -237,19 +262,19 @@ public class ArbolGen {
     public String toString() {
         return toStringAux(this.raiz);
     }
-
     private String toStringAux(NodoGen nodo) {
         String enTexto = "";
 
         if (nodo != null) {
             enTexto += nodo.getElem().toString() + " -> ";
             NodoGen hijo = nodo.getHijoIzquierdo();
+
             while (hijo != null) {
                 enTexto += hijo.getElem().toString() + ", ";
                 hijo = hijo.getHermanoDerecho();
             }
 
-            hijo = hijo.getHijoIzquierdo();
+            hijo = nodo.getHijoIzquierdo();
             while (hijo != null) {
                 enTexto += "\n" + toStringAux(hijo);
                 hijo = hijo.getHermanoDerecho();
