@@ -16,11 +16,14 @@ public class TestArbolGen {
         arbol.insertar('J', 'E');
         arbol.insertar('K', 'E');
 
+        ArbolGen arbol2 = arbol.clone();
+
         System.out.println(arbol.toString());
         System.out.println(arbol.listarInorden().toString());
         System.out.println(arbol.listarPreorden().toString());
-        System.out.println(arbol.padre('J'));
-        System.out.println(arbol.nivel('I'));
+        System.out.println(arbol.listarPosorden().toString());
+        System.out.println(arbol.listarNiveles());
+
         
     }
 }
