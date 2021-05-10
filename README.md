@@ -4,11 +4,13 @@ Este repositorio cuenta con todas las estructuras de datos y sus implementacione
 Estructuras:
   > Pila (estatica y dinamica)
   >
-  >  Cola (estatica y dinamica)
+  > Cola (estatica y dinamica)
   >
   > Lista
   > 
   > Arbol Binario
+  > 
+  > Arbol Generico
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
