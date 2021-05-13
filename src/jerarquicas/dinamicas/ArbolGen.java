@@ -26,7 +26,7 @@ public class ArbolGen {
         NodoGen nuevo = new NodoGen(elemNuevo, null, null);
 
         if (this.raiz != null) {
-            NodoGen padre = buscarPadre(this.raiz, elemPadre);
+            NodoGen padre = buscarNodo(this.raiz, elemPadre);
 
             // Si existe el padre
             if (padre != null) {
@@ -53,7 +53,9 @@ public class ArbolGen {
         }
         return exito;
     }
-    private NodoGen buscarPadre(NodoGen nodo, Object elemPadre) {
+    
+    // ---- Buscar Nodo ----
+    private NodoGen buscarNodo(NodoGen nodo, Object elemPadre) {
         NodoGen padre = null;
         if (nodo != null) {
             // Si el nodo es el padre buscado, guardo en padre este nodo
@@ -61,10 +63,10 @@ public class ArbolGen {
                 padre = nodo;
             } else {
                 // Sino busco en los hermanos derechos
-                padre = buscarPadre(nodo.getHermanoDerecho(), elemPadre);
+                padre = buscarNodo(nodo.getHermanoDerecho(), elemPadre);
                 // Si padre sigue siendo nulo entonces busco en el proximo nivel (los hijos)
                 if (padre == null) {
-                    padre = buscarPadre(nodo.getHijoIzquierdo(), elemPadre);
+                    padre = buscarNodo(nodo.getHijoIzquierdo(), elemPadre);
                 }
             }
         }
@@ -74,7 +76,7 @@ public class ArbolGen {
     // ---- Pertenece ----
     public boolean pertenece(Object elem) {
         boolean exito = false;
-        if (this.raiz != null && buscarPadre(this.raiz, elem) != null) {
+        if (this.raiz != null && buscarNodo(this.raiz, elem) != null) {
             exito = true;
         }
         return exito;
@@ -220,8 +222,7 @@ public class ArbolGen {
         NodoGen clonado = null;
 
         if (nodo != null) {
-            clonado = new NodoGen(nodo.getElem(), cloneAux(nodo.getHijoIzquierdo()),
-                    cloneAux(nodo.getHermanoDerecho()));
+            clonado = new NodoGen(nodo.getElem(), cloneAux(nodo.getHijoIzquierdo()), cloneAux(nodo.getHermanoDerecho()));
         }
 
         return clonado;
@@ -230,6 +231,35 @@ public class ArbolGen {
     // ---- Vaciar ----
     public void vaciar() {
         this.raiz = null;
+    }
+
+    // ---- Grado ----
+    public int gradoSubarbol(Object elem){
+        int cantHijos = -1;
+
+        if(this.raiz != null){
+            // Apunto nodoElem al nodo del elemento
+            NodoGen nodoElem = buscarNodo(this.raiz, elem);
+
+            //Si no es nulo entonces tiene cantHijos 0
+            if(nodoElem != null){
+                cantHijos = 0;
+
+                // Si tiene al menos un hijo
+                if(nodoElem.getHijoIzquierdo() != null){
+                    // Apunto nodoElem al hijo izquierdo y aumenta la cantidad de hijos en 1
+                    nodoElem = nodoElem.getHijoIzquierdo();
+                    cantHijos++;
+
+                    // Mientras que el nodoElem tenga hermanos derechos, los suma a cantHijos
+                    while(nodoElem.getHermanoDerecho() != null){
+                        nodoElem = nodoElem.getHermanoDerecho();
+                        cantHijos++;
+                    }
+                }
+            }
+        }
+        return cantHijos;
     }
 
     // ---- Preorden ----
@@ -316,7 +346,7 @@ public class ArbolGen {
     }
 
     // ---- Listar Niveles ----
-    public Lista listarNiveles() {
+    public Lista listarPorNiveles() {
         Cola cAux = new Cola();
         Lista lis = new Lista();
         NodoGen nodo;
