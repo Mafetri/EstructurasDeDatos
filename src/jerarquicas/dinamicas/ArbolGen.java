@@ -50,6 +50,7 @@ public class ArbolGen {
             }
         } else {
             this.raiz = nuevo;
+            exito = true;
         }
         return exito;
     }
@@ -127,33 +128,24 @@ public class ArbolGen {
 
         return alt;
     }
-    private int alturaAux(NodoGen nodo) {
-        int alt = 0;
-        int altD = 0;
+    private int alturaAux(NodoGen nodo){
+        int aRetornar = -1, contador;
 
-        if (nodo != null) {
-            // Profundizo por izquierda
-            alt = alturaAux(nodo.getHijoIzquierdo()) + 1;
+        if(nodo != null){
+            // Recorro todos los hijos y profundizo
+            while(nodo != null){
+                // Profundizo por izquierda
+                contador = alturaAux(nodo.getHijoIzquierdo()) +1;
 
-            // Ahora profundizo a traves de los hermanos
-            while (nodo.getHermanoDerecho() != null) {
-                // Apunto el nodo al hermano
-                nodo = nodo.getHermanoDerecho();
-
-                // Si tiene un hijo profundizo
-                if (nodo.getHijoIzquierdo() != null) {
-                    altD = alturaAux(nodo.getHijoIzquierdo()) + 1;
+                // Si es mas profundo
+                if(contador > aRetornar){
+                    aRetornar = contador;
                 }
-            }
-
-            // Si la altura a traves de los hermanos es mas alta que la de la izq
-            if (altD > alt) {
-                alt = altD;
+                nodo = nodo.getHermanoDerecho();
             }
         }
-
-        return alt;
-    }
+        return aRetornar;
+    } 
 
     // ---- Nivel ----
     public int nivel(Object elem) {
