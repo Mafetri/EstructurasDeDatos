@@ -234,31 +234,61 @@ public class ArbolGen {
     }
 
     // ---- Grado ----
-    public int gradoSubarbol(Object elem){
-        int cantHijos = -1;
+    public int grado(){
+        int gradoMax = -1;
 
         if(this.raiz != null){
-            // Apunto nodoElem al nodo del elemento
+            gradoMax = gradoAux(this.raiz);
+        }
+
+        return gradoMax;
+    }
+    public int gradoSubarbol(Object elem){
+        int cantHijos = -1;
+        
+        if(this.raiz != null){
             NodoGen nodoElem = buscarNodo(this.raiz, elem);
+            if( nodoElem != null){
+                cantHijos = gradoAux(nodoElem);
+            }
+        }
 
-            //Si no es nulo entonces tiene cantHijos 0
-            if(nodoElem != null){
-                cantHijos = 0;
+        return cantHijos;
+    }
+    private int gradoAux(NodoGen nodo){
+        int cantHijos = 0;
+        int gradoHijos = 0;
 
-                // Si tiene al menos un hijo
-                if(nodoElem.getHijoIzquierdo() != null){
-                    // Apunto nodoElem al hijo izquierdo y aumenta la cantidad de hijos en 1
-                    nodoElem = nodoElem.getHijoIzquierdo();
+        //Si tiene al menos un hijo
+        if(nodo != null){
+            if(nodo.getHijoIzquierdo() != null){
+                // Cuento cuantos hijos tiene
+                NodoGen nodoHijo = nodo.getHijoIzquierdo();
+                cantHijos++;
+                while(nodoHijo.getHermanoDerecho() != null){
+                    nodoHijo = nodoHijo.getHermanoDerecho();
                     cantHijos++;
+                }
 
-                    // Mientras que el nodoElem tenga hermanos derechos, los suma a cantHijos
-                    while(nodoElem.getHermanoDerecho() != null){
-                        nodoElem = nodoElem.getHermanoDerecho();
-                        cantHijos++;
+                // Pregunto al hijo izquierdo cuantos hijos tiene
+                nodoHijo = nodo.getHijoIzquierdo();
+                gradoHijos = gradoAux(nodoHijo);
+                // Si tiene mas que este nodo, reemplazo cantHijos por la cant de hijos
+                if(gradoHijos > cantHijos){
+                    cantHijos = gradoHijos;
+                }
+
+                // Ahora pregunto a cada hermano del hijo izquierdo
+                while(nodoHijo.getHermanoDerecho() != null){
+                    nodoHijo = nodoHijo.getHermanoDerecho();
+                    gradoHijos = gradoAux(nodoHijo);
+                    if(gradoHijos > cantHijos){
+                        cantHijos = gradoHijos;
                     }
                 }
             }
         }
+
         return cantHijos;
     }
 
