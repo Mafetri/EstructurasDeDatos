@@ -8,16 +8,7 @@
 |        > Manuel Felipe Triñanes (FAI-2738)    |
 =================================================
 */
-/*
-+pertenece(TipoElemento): boolean                   OK!
-+insertar(Tiponemento): boolean                     OK!
-+eliminar(TipoElemento): boolean                    OK!
-+listar(): Lista                                    OK!
-+listarRango(TipoElemento,TipoElemento): Lista      OK!
-+minimoElem(): TipoElemento                         OK!
-+maximoElem(): TipoElemento                         OK!
-+vacio(): boolean 
-*/
+
 package conjuntistas.dinamicas;
 import lineales.dinamicas.Lista;
 
@@ -363,6 +354,4 @@ public class ArbolBB {
 
         return enTexto;
     }
-
-
 }
