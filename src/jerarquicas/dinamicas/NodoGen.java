@@ -1,6 +1,6 @@
 package jerarquicas.dinamicas;
 
-public class NodoGen {
+class NodoGen {
     private Object elem;
     private NodoGen hijoIzquierdo;
     private NodoGen hermanoDerecho;
