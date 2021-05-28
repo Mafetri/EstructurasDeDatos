@@ -83,9 +83,9 @@ public class ArbolBB {
             } else {
                 // Sino busco por izquierda o por derecha
                 if (elem.compareTo(nodo.getElem()) < 0) {
-                    exito = insertarAux(nodo.getIzquierdo(), elem);
+                    exito = perteneceAux(nodo.getIzquierdo(), elem);
                 } else {
-                    exito = insertarAux(nodo.getDerecho(), elem);
+                    exito = perteneceAux(nodo.getDerecho(), elem);
                 }
             }
         }
