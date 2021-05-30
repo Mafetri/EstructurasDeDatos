@@ -1,26 +1,32 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
-Este repositorio cuenta con todas las estructuras de datos y sus implementaciones vistas en Estructuras de Datos (FAI, UNCo) en 2021 por Manuel Triñanes
----------------------------------------------------------------------------------------------------------------------------------------------------------
-Estructuras:
-  > Pila (estatica y dinamica)
-  >
-  > Cola (estatica y dinamica)
-  >
-  > Lista
-  > 
-  > Arbol Binario
-  > 
-  > Arbol Generico
-
+Estructuras de Datos (FAI, UNCo), 2021
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Folder Structure
+Estructuras Lineales
+---
+Estaticas:
+- [Pila](https://github.com/Mafetri/EDAT2021/blob/main/src/lineales/estaticas/Pila.java)
+- [Cola](https://github.com/Mafetri/EDAT2021/blob/main/src/lineales/estaticas/Cola.java)
 
-The workspace contains two folders by default, where:
+Dinamicas:
+- [Pila](https://github.com/Mafetri/EDAT2021/blob/main/src/lineales/dinamicas/Pila.java)
+- [Cola](https://github.com/Mafetri/EDAT2021/blob/main/src/lineales/dinamicas/Cola.java)
+- [Lista](https://github.com/Mafetri/EDAT2021/blob/main/src/lineales/dinamicas/Lista.java)
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Estructuras Jerarquicas
+---
+Estaticas:
 
-## Dependency Management
+Dinamicas:
+  - [Arbol Binario](https://github.com/Mafetri/EDAT2021/blob/main/src/jerarquicas/dinamicas/ArbolBin.java)
+  - [Arbol Generico](https://github.com/Mafetri/EDAT2021/blob/main/src/jerarquicas/dinamicas/ArbolGen.java)
 
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+Estructuras Conjuntistas
+---
+Estaticas:
+  - [Arbol Heap](https://github.com/Mafetri/EDAT2021/blob/main/src/conjuntistas/estaticas/ArbolHeap.java)
+ 
+Dinamicas:
+  - [Arbol Binario de Busqueda](https://github.com/Mafetri/EDAT2021/blob/main/src/conjuntistas/dinamicas/ArbolBB.java)
+  - [Arbol AVL](https://github.com/Mafetri/EDAT2021/blob/main/src/conjuntistas/dinamicas/ArbolAVL.java)
+---------------------------------------------------------------------------------------------------------------------------------------------------------
