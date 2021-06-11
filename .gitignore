@@ -5,3 +5,9 @@ src/test/lineales/TestingCola.java
 src/test/lineales/TestingLista.java
 src/test/lineales/TestCadenas.java
 src/test/jerarquicas/TestBinario.java
+src/test/lineales/TestCadenas.java
+src/test/conjuntistas/TestBB.java
+src/test/jerarquicas/TestArbolGen.java
+src/test/conjuntistas/TestAVL.java
+src/test/jerarquicas/TestingGen.java
+src/test/jerarquicas/TestArbolGen.java

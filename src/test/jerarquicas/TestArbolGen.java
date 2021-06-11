@@ -1,9 +1,10 @@
 package test.jerarquicas;
 import jerarquicas.dinamicas.*;
+import lineales.dinamicas.*;
 public class TestArbolGen {
     public static void main(String[] args){
         ArbolGen arbol = new ArbolGen();
-
+        Lista lis = new Lista();
         arbol.insertar('A', null);
         arbol.insertar('B', 'A');
         arbol.insertar('C', 'A');
@@ -16,14 +17,16 @@ public class TestArbolGen {
         arbol.insertar('J', 'E');
         arbol.insertar('K', 'E');
 
-        ArbolGen arbol2 = arbol.clone();
+        /*
+                            A
+                B           C           D
+                E       F   G   H
+            I   J   K
+        */
 
         System.out.println(arbol.toString());
-        System.out.println(arbol.listarInorden().toString());
-        System.out.println(arbol.listarPreorden().toString());
-        System.out.println(arbol.listarPosorden().toString());
-        System.out.println(arbol.listarNiveles());
+        lis = arbol.listarEntreNiveles(0, 3);
+        System.out.println(lis.toString());
 
-        
     }
 }

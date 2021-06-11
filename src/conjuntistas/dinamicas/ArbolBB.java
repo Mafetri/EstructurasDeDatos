@@ -354,4 +354,61 @@ public class ArbolBB {
 
         return enTexto;
     }
+
+    // ---- Simulacro Parcial ----
+    public void eliminarMinimo(){
+        if(this.raiz != null){
+            eliminarMinimoAux(this.raiz);
+        }
+    }
+    private void eliminarMinimoAux(NodoBB nodo){
+        if(nodo != null){
+            if(nodo.getIzquierdo().getIzquierdo() == null){
+                nodo.setIzquierdo(null);
+                
+            } else{
+                eliminarMinimoAux(nodo.getIzquierdo());
+            }
+        }
+    }
+
+    public ArbolBB clonarParteInvertida(Comparable elem){
+        ArbolBB retorno = new ArbolBB();
+
+        if(this.raiz != null && elem != null){
+            retorno.raiz = invertirHijos(buscarNodo(this.raiz, elem));
+        }
+
+        return retorno;
+    }
+    private NodoBB invertirHijos(NodoBB nodo){
+        NodoBB clonado = null;
+
+        if (nodo != null) {
+            clonado = new NodoBB(nodo.getElem(), invertirHijos(nodo.getDerecho()), invertirHijos(nodo.getIzquierdo()));
+        }
+        
+        return clonado;
+    }
+    private NodoBB buscarNodo(NodoBB nodo, Comparable elem){
+        NodoBB retorno = null;
+        if (elem.compareTo(nodo.getElem()) == 0) {
+            // La insersion es falsa ya que no puede haber elementos repetidos
+            retorno = nodo;
+        } else if (elem.compareTo(nodo.getElem()) < 0) {
+            // Si elem es mas chico que el elemento del nodo
+            // Y si el nodo tiene hijo izquierdo, baja por ese lado
+            if (nodo.getIzquierdo() != null) {
+                retorno = buscarNodo(nodo.getIzquierdo(), elem);
+            }
+        } else {
+            // Si el elemento entonces es mas grande
+            // Y si tiene hijo derecho
+            if (nodo.getDerecho() != null) {
+                // Bajo por derecha
+                retorno = buscarNodo(nodo.getDerecho(), elem);
+            }
+        }
+        return retorno;
+    }
 }
