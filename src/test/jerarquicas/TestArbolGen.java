@@ -28,5 +28,7 @@ public class TestArbolGen {
         lis = arbol.listarEntreNiveles(0, 3);
         System.out.println(lis.toString());
 
+        System.out.println(arbol.esHermanoAnterior('F', 'D'));
+
     }
 }

@@ -411,4 +411,33 @@ public class ArbolBB {
         }
         return retorno;
     }
+
+    // ---- Parcial ----
+    public String concatenarPosordenDesde(Comparable elem, int x){
+        String retorno = "@@@";
+        NodoBB nodoElem = null;
+        if(this.raiz != null){
+            nodoElem = buscarNodo(this.raiz, elem);
+            if(nodoElem != null){
+                retorno = concatenar(nodoElem, x, 0);
+                if(retorno.length() < x){
+                    retorno = "@" + retorno;
+                }
+            }
+        }
+        return retorno;
+    }
+    private String concatenar(NodoBB nodo, int x, int cantRecorridos){
+        String cadena = "";
+        if (nodo != null) {
+            if(cantRecorridos < x){
+                cadena += concatenar(nodo.getIzquierdo(), x, cadena.length());
+                cadena += concatenar(nodo.getDerecho(), x, cadena.length());
+                if(cadena.length()+1 < x && cantRecorridos < x){
+                    cadena += nodo.getElem().toString();
+                }
+            }
+        }
+        return cadena;
+    }
 }

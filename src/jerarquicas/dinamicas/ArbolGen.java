@@ -98,7 +98,6 @@ public class ArbolGen {
 
         return aRetornar;
     }
-
     private Object padreAux(Object hijo, Object padre, NodoGen nodo) {
         Object padreElem = null;
 
@@ -129,7 +128,6 @@ public class ArbolGen {
 
         return alt;
     }
-
     private int alturaAux(NodoGen nodo) {
         int aRetornar = -1, contador;
 
@@ -157,7 +155,6 @@ public class ArbolGen {
         }
         return niv;
     }
-
     private int nivelAux(NodoGen nodo, Object elem, int profundidad) {
         int nivel = -1;
         if (nodo != null) {
@@ -182,7 +179,6 @@ public class ArbolGen {
         }
         return lis;
     }
-
     private boolean ancestrosAux(Object elem, Lista lis, NodoGen nodo) {
         boolean exito = false;
 
@@ -214,7 +210,6 @@ public class ArbolGen {
         }
         return clonado;
     }
-
     private NodoGen cloneAux(NodoGen nodo) {
         NodoGen clonado = null;
 
@@ -241,7 +236,6 @@ public class ArbolGen {
 
         return gradoMax;
     }
-
     public int gradoSubarbol(Object elem) {
         int cantHijos = -1;
 
@@ -254,7 +248,6 @@ public class ArbolGen {
 
         return cantHijos;
     }
-
     private int gradoAux(NodoGen nodo) {
         int cantHijos = 0;
         int gradoHijos = 0;
@@ -300,7 +293,6 @@ public class ArbolGen {
         }
         return lis;
     }
-
     private void listarPreordenAux(NodoGen nodo, Lista lis) {
         if (nodo != null) {
             // Guardo el elemento en la lista
@@ -329,7 +321,6 @@ public class ArbolGen {
         }
         return aRetornar;
     }
-
     private void listarInordenAux(NodoGen nodo, Lista ls) {
         if (nodo != null) {
             // Mientras el hijo izquierdo no sea nulo, llamo recursivamente con el hijo
@@ -360,7 +351,6 @@ public class ArbolGen {
         }
         return aRetornar;
     }
-
     private void listarPosordenAux(NodoGen nodo, Lista lis) {
         if (nodo != null) {
             if (nodo.getHijoIzquierdo() != null) {
@@ -437,6 +427,7 @@ public class ArbolGen {
         return enTexto;
     }
 
+    // ---- Simulacro Parcial ----
     public boolean verificarCamino(Lista lis) {
         boolean exito = false;
         if (this.raiz != null && lis.recuperar(1).equals(this.raiz.getElem())) {
@@ -444,7 +435,6 @@ public class ArbolGen {
         }
         return exito;
     }
-
     private boolean verificarCaminoAux(NodoGen nodo, Lista lis, int pos) {
         boolean exito = false;
         boolean exitoHijo = false;
@@ -483,7 +473,6 @@ public class ArbolGen {
         }
         return lis;
     }
-    // FUNCIONA PERO EN PREORDEN NO INORDEN
     private Lista listarEntreNivelesAux(int niv1, int niv2, Lista lis, NodoGen nodo, int altura) {
         if (nodo != null && altura <= niv2) {
             // Si estoy dentro del rango guardo el elemento
@@ -502,5 +491,60 @@ public class ArbolGen {
             }
         }
         return lis;
+    }
+
+    // ---- Parcial ----
+    public boolean esHermanoAnterior(Object a, Object b){
+        boolean exito = false;
+        if(this.raiz != null && a != null && b != null){
+            exito = esHermanoAnteriorAux(this.raiz,a, b);
+        }
+        return exito;
+    }
+    private boolean esHermanoAnteriorAux(NodoGen nodo, Object anterior, Object posterior){
+        boolean exito = false;
+        boolean exitoAnterior = false;
+        boolean exitoPosterior = false;
+
+        if(nodo != null){
+            NodoGen hijo = nodo.getHijoIzquierdo();
+            if(hijo != null){
+                if(!hijo.getElem().equals(anterior)){
+                    hijo = hijo.getHermanoDerecho();
+                    while(hijo != null && !exitoAnterior){
+                        if(hijo.getElem().equals(anterior)){
+                            exitoAnterior = true;
+                        }else{
+                            hijo = hijo.getHermanoDerecho();
+                        }
+                    }
+                } else{
+                    exitoAnterior = true;
+                }
+
+                if(exitoAnterior){
+                    hijo = hijo.getHermanoDerecho();
+
+                    while(hijo != null && !exitoPosterior){
+                        if(hijo.getElem().equals(posterior)){
+                            exitoPosterior = true;
+                        }else{
+                            hijo = hijo.getHermanoDerecho();
+                        }
+                    }
+                }
+
+                if(exitoAnterior && exitoPosterior){
+                    exito = true;
+                }else if(!exitoAnterior && !exitoPosterior){
+                    hijo = nodo.getHijoIzquierdo();
+                    while(hijo != null && !exito){
+                        exito = esHermanoAnteriorAux(hijo, anterior, posterior);
+                        hijo = hijo.getHermanoDerecho();
+                    }
+                }
+            }   
+        }
+        return exito;
     }
 }
