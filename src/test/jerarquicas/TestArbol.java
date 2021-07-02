@@ -56,5 +56,49 @@ public class TestArbol {
 
         fam2.cambiarHijos("Hector", "Jose", "Jorge");
         System.out.println(fam2.toString());
+
+        ArbolBin parcial = new ArbolBin();
+        ArbolBin parcial2 = new ArbolBin();
+        ArbolBin parcial3 = new ArbolBin();
+        ArbolBin parcial4 = new ArbolBin();
+        ArbolBin parcial5 = new ArbolBin();
+        ArbolBin parcial6 = new ArbolBin();
+        parcial.insertar(34, "p", 'd');
+        parcial.insertar(25, 34, 'I');
+        parcial.insertar(17, 34, 'D');
+        parcial.insertar(71, 25, 'I');
+        parcial.insertar(63, 71, 'D');
+        parcial.insertar(12, 17, 'I');
+        parcial.insertar(23, 17, 'D');
+
+        parcial2.insertar(34, "p", 'd');
+        parcial2.insertar(25, 34, 'I');
+        parcial2.insertar(67, 34, 'D');
+        parcial2.insertar(71, 25, 'I');
+        parcial2.insertar(63, 71, 'D');
+        parcial2.insertar(12, 67, 'I');
+        parcial2.insertar(23, 67, 'D');
+
+        parcial3.insertar(34, "p", 'd');
+        parcial3.insertar(25, 34, 'I');
+        parcial3.insertar(17, 34, 'D');
+        parcial3.insertar(71, 25, 'I');
+        parcial3.insertar(12, 17, 'I');
+        parcial3.insertar(23, 17, 'D');
+        parcial3.insertar(63, 12, 'I');
+
+        parcial4.insertar(34, "p", 'd');
+        parcial4.insertar(25, 34, 'I');
+        parcial4.insertar(17, 34, 'D');
+        parcial4.insertar(71, 25, 'I');
+        parcial4.insertar(12, 17, 'I');
+        parcial4.insertar(23, 17, 'D');
+        parcial4.insertar(63, 12, 'I');
+
+        System.out.println(parcial.toString());
+        System.out.println(parcial2.toString());
+        System.out.println(parcial3.toString());
+        System.out.println(parcial4.toString());
+        System.out.println(parcial3.verificarDistintos(parcial4));
     }
 }

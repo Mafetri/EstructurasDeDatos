@@ -7,6 +7,7 @@ public class PruebaLista {
         Lista l1 = new Lista();
         Lista l2 = new Lista();
         Lista l3 = new Lista();
+        Lista l4 = new Lista();
 
         l1.insertar(2, 1);
         l1.insertar(4, 2);
@@ -22,7 +23,7 @@ public class PruebaLista {
         l3.insertar(5, 3);
         l3.insertar(0, 4);
         l3.insertar(9, 5);
-        l3.insertar(6, 6);
+        l3.insertar(5, 6);
         l3.insertar(5, 7);
         l3.insertar(0, 8);
         l3.insertar(5, 9);
@@ -61,6 +62,21 @@ public class PruebaLista {
         System.out.println("HOLA");
         l3.insertarPosSiguiente(6, 8);
         System.out.println(l3.toString());
+
+        System.out.println("===============================");
+        l4.insertar(1, 1);
+        l4.insertar(2, 2);
+        l4.insertar(3, 3);
+        l4.insertar(1, 4);
+        l4.insertar(4, 5);
+        l4.insertar(7, 6);
+        l4.insertar(1, 7);
+        l4.insertar(1, 8);
+        l4.insertar(8, 9);
+        l4.insertar(1, 10);
+        System.out.println(l4.toString());
+        l4.eliminarSiguiente(1);
+        System.out.println(l4.toString());
     }
 
     public static Lista concatenar(Lista l1, Lista l2) {

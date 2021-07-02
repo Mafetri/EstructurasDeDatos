@@ -505,4 +505,30 @@ public class ArbolBin {
         }
         return exito;
     }
+
+    public boolean verificarDistintos(ArbolBin arbol){
+        boolean exito = false;
+        if(this.raiz != null && arbol.raiz != null){
+            exito = verificarDistintosAux(this.raiz, arbol.raiz);
+        } else if( this.raiz == null && arbol.raiz == null){
+            exito = true;
+        }
+        return exito;
+    }
+    private boolean verificarDistintosAux(NodoArbol nodoOriginal, NodoArbol nodoArbol){
+        boolean exito = false;
+
+        if(nodoOriginal != null && nodoArbol != null){
+            if(nodoOriginal.getElem().equals(nodoArbol.getElem())){
+                exito = verificarDistintosAux(nodoOriginal.getIzquierdo(), nodoArbol.getIzquierdo());
+                if(exito){
+                    exito = verificarDistintosAux(nodoOriginal.getDerecho(), nodoArbol.getDerecho());
+                }
+            }
+        } else if(nodoOriginal == null && nodoArbol == null){
+            exito = true;
+        }
+
+        return exito;
+    }
 }

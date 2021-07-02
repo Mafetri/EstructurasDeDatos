@@ -389,4 +389,17 @@ public class Lista {
             }
         }
     }
+
+    public void eliminarSiguiente(Object buscado){
+        if(this.cabecera != null && buscado != null){
+            Nodo aux = this.cabecera;
+            while(aux != null){
+                if(aux.getEnlace() != null && aux.getElem().equals(buscado) && !aux.getEnlace().getElem().equals(buscado)) {
+                    aux.setEnlace(aux.getEnlace().getEnlace());
+                    longitud--;
+                }
+                aux = aux.getEnlace();
+            }
+        }
+    }
 }

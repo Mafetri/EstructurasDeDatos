@@ -8,6 +8,7 @@ public class TestCadenas {
         Cola c1 = new Cola();
         Cola c2 = new Cola();
         Cola c3 = new Cola();
+        Cola c4 = new Cola();
         Pila p1 = new Pila();
 
         c1.poner('A');
@@ -64,6 +65,30 @@ public class TestCadenas {
 
         System.out.println(p1.toString());
         System.out.println(formarLista(p1).toString());
+
+        c4.poner('8');
+        c4.poner('9');
+        c4.poner('6');
+        c4.poner('&');
+        c4.poner('6');
+        c4.poner('9');
+        c4.poner('8');
+        c4.poner('8');
+        c4.poner('9');
+        c4.poner('6');
+        c4.poner('&');
+        c4.poner('1');
+        c4.poner('7');
+        c4.poner('&');
+        c4.poner('7');
+        c4.poner('1');
+        c4.poner('1');
+        c4.poner('7');
+
+        
+        System.out.println("===================================");
+        System.out.println(c4.toString());
+        System.out.println(controlarPatron2(c4));
     }
 
     public static Cola generar(Cola c1) {
@@ -210,4 +235,93 @@ public class TestCadenas {
         return lis;
     }
 
+    public static boolean controlarPatron(Cola q){
+        boolean exito = true;
+        Pila pAux = new Pila();
+        Cola cAux = new Cola();
+
+        while(!q.esVacia() && exito){
+            while (!q.esVacia() && (char)q.obtenerFrente() != '&') {
+                pAux.apilar(q.obtenerFrente());
+                cAux.poner(q.obtenerFrente());
+                q.sacar();
+            }
+            q.sacar();
+
+            while(!q.esVacia() && !pAux.esVacia() &&(char)q.obtenerFrente() != '&' && exito){
+                if(pAux.obtenerTope() != q.obtenerFrente()){
+                    exito = false;
+                }else{
+                    pAux.desapilar();
+                    q.sacar();
+                }
+            }
+
+            if(exito){
+                while(!q.esVacia() && !cAux.esVacia() && (char)q.obtenerFrente() != '&' && exito){
+                    if(cAux.obtenerFrente() != q.obtenerFrente()){
+                        exito = false;
+                    }else{
+                        cAux.sacar();
+                        q.sacar();
+                    }
+                }
+            }
+            pAux.vaciar();
+            cAux.vaciar();
+            if(!q.esVacia() && (char)q.obtenerFrente() == '&'){
+                q.sacar();
+            }
+        }
+
+        return exito;
+    }
+
+    public static boolean controlarPatron2(Cola q){
+        boolean exito = true;
+        Pila pAux = new Pila();
+        Cola cAux = new Cola();
+
+        while(!q.esVacia() && exito){
+            while (!q.esVacia() && (char)q.obtenerFrente() != '&') {
+                pAux.apilar(q.obtenerFrente());
+                cAux.poner(q.obtenerFrente());
+                q.sacar();
+            }
+            q.sacar();
+            while(!q.esVacia() && !pAux.esVacia() &&(char)q.obtenerFrente() != '&' && exito){
+                if(pAux.obtenerTope() == q.obtenerFrente()){
+                    pAux.desapilar();
+                    q.sacar();
+                }else{
+                    exito = false;
+                }
+            }
+
+            if(exito){
+                while(!q.esVacia() && !cAux.esVacia() && (char)q.obtenerFrente() != '&' && exito){
+                    if(cAux.obtenerFrente() == q.obtenerFrente()){
+                        cAux.sacar();
+                        q.sacar();
+                    }else{
+                        exito = false;
+                    }
+                }
+            }
+            
+            if(!pAux.esVacia() || !cAux.esVacia()){
+                exito = false;
+            }
+
+            if(!q.esVacia()){
+                if((char)q.obtenerFrente() == '&'){
+                    q.sacar();
+                }else{
+                    exito = false;
+                }
+            }
+        }
+
+        return exito;
+    }
 }
