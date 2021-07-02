@@ -28,7 +28,7 @@ public class PruebaLista {
         l3.insertar(5, 9);
         l3.insertar(6, 10);
         l3.insertar(9, 11);
-        l3.insertar(11, 12);
+        l3.insertar(9, 12);
 
         // Muestro cadena 1 y su invertida
         System.out.println("Cadena 1: " + l1.toString());
@@ -52,9 +52,14 @@ public class PruebaLista {
 
         // Muestro una cadena que solo tiene los multiplos del numero enviado
         System.out.println(l3.obtenerMultiplos(2).toString());
-
+        System.out.println("===============================");
         // Muestro l3 sin los elementos que le envio por parametro
+        System.out.println(l3.toString());
         l3.eliminarApariciones(9);
+        System.out.println(l3.toString());
+
+        System.out.println("HOLA");
+        l3.insertarPosSiguiente(6, 8);
         System.out.println(l3.toString());
     }
 

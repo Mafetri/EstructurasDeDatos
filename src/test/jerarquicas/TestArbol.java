@@ -43,16 +43,18 @@ public class TestArbol {
 
         System.out.println(fam2.frontera().toString());
 
+        // Verificar patron desde la raiz
+        System.out.println("=========================");
         fam3.insertar("Hector", 1);
         fam3.insertar("Jorge", 2);
         fam3.insertar("Manuel", 3);
-        fam3.insertar("Rocco", 4);
-        
+        fam3.insertar("Jack", 4);
+        System.out.println(fam2.toString());
         System.out.println(fam2.verificarPatron(fam3));
 
         System.out.println(fam2.justificar().toString());
 
-        fam2.cambiarHijos("Herberto", "Jose", "Jorge");
+        fam2.cambiarHijos("Hector", "Jose", "Jorge");
         System.out.println(fam2.toString());
     }
 }

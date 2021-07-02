@@ -45,21 +45,22 @@ public class TestCadenas {
         c2.poner('1');
         c2.poner('}');
 
+        System.out.println(c2.toString());
         System.out.println(verificarBalanceo(c2));
 
-        p1.apilar('R');
-        p1.apilar('T');
-        p1.apilar('Z');
-        p1.apilar('@');
-        p1.apilar('T');
-        p1.apilar('Y');
-        p1.apilar('@');
-        p1.apilar('Z');
-        p1.apilar('R');
-        p1.apilar('@');
-        p1.apilar('W');
-        p1.apilar('Y');
         p1.apilar('X');
+        p1.apilar('Y');
+        p1.apilar('W');
+        p1.apilar('@');
+        p1.apilar('R');
+        p1.apilar('Z');
+        p1.apilar('@');
+        p1.apilar('Y');
+        p1.apilar('T');
+        p1.apilar('@');
+        p1.apilar('Z');
+        p1.apilar('T');
+        p1.apilar('R');
 
         System.out.println(p1.toString());
         System.out.println(formarLista(p1).toString());
@@ -80,7 +81,7 @@ public class TestCadenas {
                 c1.sacar();
             }
 
-            // Almaceno en la cola a retornar el ultimo elemento de la lista
+            // Almaceno en la cola a retornar el ultimo elemento de la lista                    // SE PUEDE SIMPLIFICAR INGRESANDO PREVIAMENTE A LA LISTA LOS ITEMS EN ORDEN
             // asi queda en la cola la cadena original
             for (int i = lAux.longitud(); i >= 1; i--) {
                 aRetornar.poner(lAux.recuperar(i));
@@ -109,6 +110,13 @@ public class TestCadenas {
         return aRetornar;
     }
 
+    // ---- Verificar Balanceo ----
+    // Este modulo guarda solo los corchetes en una lista, luego, si la lista tiene longitud par
+    // apila de derecha a izquierda los elementos de la lista hasta la mitad
+    // Luego compara la mitad que queda en la lista para ver si al invertirlo (ej: [ -> ]) conincide con
+    // la ultima entrada a la pila. Si la cantidad de coincidentes es la misma que la longitud de la lista 
+    // dividido 2 (la totalidad de corchetes) entonces esta balanceado
+    // ESTE ALGORITMO ES MUY SIMILAR A COMO SE HARIA EN UN AUTOMATA A PILA
     public static boolean verificarBalanceo(Cola q) {
         int cantIguales = 0;
         Lista lAux = new Lista();
@@ -138,53 +146,68 @@ public class TestCadenas {
         }
         return cantIguales == longitud / 2;
     }
-
     public static char invertido(char elem) {
         char retorno = '-';
 
-        if (elem == '{') {
-            retorno = '}';
-        }
-        if (elem == '(') {
-            retorno = ')';
-        }
-        if (elem == '[') {
-            retorno = ']';
-        }
+        switch(elem){
+            case '{' : retorno = '}'; break;
+            case '}' : retorno = '{'; break;
+            case '(' : retorno = ')'; break;
+            case ')' : retorno = '('; break;
+            case '[' : retorno = ']'; break;
+            case ']' : retorno = '['; break;
 
+        }
         return retorno;
     }
 
     // ------------ PARCIAL ------------
-    public static Lista formarLista(Pila pila1){
-        Lista lAux = new Lista();
+    /*
+    Punto a tener en cuenta:
+        > Cada vez que agrego algo a la lista, tengo que si o si aumentar en uno la posicion
+        > Si no esta parado en un arroba simplemente agrega los items hasta encontrarla
+        > Si la encuentra se hace la pregunta si es par, si es impar hace una ejecucion aparte
+          que es girar y agregar a la lista
+          Si no es impar, entonces directamente hace de vuelta el loop y como no hay un arroba
+          en el tope, entonces agrega normalmente el elemento a la lista
+    */
+    public static Lista formarLista(Pila p1){
+        Lista lis = new Lista();
         Pila pAux = new Pila();
-        int cantCadenas = 1;
+        int cantArrobas = 0;
+        int pos = 1;
 
-        while(!pila1.esVacia()){
-            lAux.insertar(pila1.obtenerTope(), 1);
-            pila1.desapilar();
-        }
+        while(!p1.esVacia()){
+            if((char)p1.obtenerTope() == ('@')){
+                // Inserto en la lista el arroba de la pila
+                lis.insertar('@', pos);
+                pos++;
+                p1.desapilar();
+                cantArrobas++;
 
-        for(int i = 1; i <= lAux.longitud(); i++){
-            
-            if((char)lAux.recuperar(i) == '@'){
-                cantCadenas++;
-                i++;
-                if(cantCadenas % 2 == 0){
-                    while(lAux.recuperar(i) == null|| (char)lAux.recuperar(i) != '@'){
-                        pAux.apilar(lAux.recuperar(i));
-                        lAux.eliminar(i);
+                // Si la cantidad de arrobas es impar, si no es impar entonces que siga la ejecucion
+                if(cantArrobas % 2 != 0){
+                    // Agrego en la pila auxiliar, la cual da vuelta los items hasta que la pila enviada este vacia
+                    // o que encuentre el proximo arroba
+                    while(!p1.esVacia() && !((char)p1.obtenerTope() == ('@'))){
+                        pAux.apilar(p1.obtenerTope());
+                        p1.desapilar();
                     }
+                    // Agrego a la lista a retornar los elementos de la pila auxiliar dados vuelta
                     while(!pAux.esVacia()){
-                        lAux.insertar(pAux.obtenerTope(), i);
+                        lis.insertar(pAux.obtenerTope(), pos);
                         pAux.desapilar();
-                        i++;
+                        pos++;
                     }
                 }
+            }else{
+                // Si no estoy parado en un arroba, agrego simplemente el item a la lista
+                lis.insertar(p1.obtenerTope(), pos);
+                p1.desapilar();
+                pos++;
             }
         }
-        return lAux;
+        return lis;
     }
 
 }

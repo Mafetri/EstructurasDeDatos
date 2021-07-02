@@ -391,7 +391,7 @@ public class ArbolBin {
         if(this.raiz == null && patron.esVacia()){
             coincide = true;
         }else{
-            coincide = verificarPatronAux(patron, this.raiz, 1);
+            coincide = verificarPatronAux2(patron, this.raiz);
         }
         
         return coincide;
@@ -421,7 +421,29 @@ public class ArbolBin {
         }
         return control;
     }
-    
+    private boolean verificarPatronAux2(Lista lis, NodoArbol nodo){
+        boolean exito = false;
+        boolean exitoHijo = false;
+        if(nodo != null && lis.longitud() > 0){
+            if(lis.recuperar(1).equals(nodo.getElem())){
+                System.out.println(lis.recuperar(1));
+                exito = true;
+                lis.eliminar(1);
+                System.out.println(lis.longitud());
+
+                if(lis.longitud() > 0){
+                    exitoHijo = verificarPatronAux2(lis, nodo.getIzquierdo());
+                    if(!exitoHijo){
+                        exitoHijo = verificarPatronAux2(lis, nodo.getDerecho());
+                        if(!exitoHijo){
+                            exito = false;
+                        }
+                    }
+                }
+            }
+        }
+        return exito;
+    }
     //---- Justificar ----
     public Lista justificar(){
         Lista lis = new Lista();
@@ -457,7 +479,8 @@ public class ArbolBin {
             cambiarHijosAux(p, izq, der, this.raiz);
         }
     }
-    private void cambiarHijosAux(Object p, Object izq, Object der, NodoArbol nodo){
+    private boolean cambiarHijosAux(Object p, Object izq, Object der, NodoArbol nodo){
+        boolean exito = false;
         if(nodo != null){
             if(nodo.getElem().equals(p)){
                 if(nodo.getIzquierdo() != null){
@@ -472,10 +495,14 @@ public class ArbolBin {
                     NodoArbol nuevoDer = new NodoArbol(der, null, null);
                     nodo.setDerecho(nuevoDer);
                 }
+                exito = true;
             }else{
-                cambiarHijosAux(p, izq, der, nodo.getIzquierdo());
-                cambiarHijosAux(p, izq, der, nodo.getDerecho());
+                exito = cambiarHijosAux(p, izq, der, nodo.getIzquierdo());
+                if(!exito){
+                    exito = cambiarHijosAux(p, izq, der, nodo.getDerecho());
+                }
             }
         }
+        return exito;
     }
 }

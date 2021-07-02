@@ -6,7 +6,6 @@
 |       > Lista                                 |
 |      Alumnos:                                 |
 |        > Manuel Felipe Triñanes (FAI-2738)    |
-|        > Axel Berg (FAI-833)                  |
 =================================================
 */
 
@@ -278,6 +277,7 @@ public class Lista {
 
     //---- Eliminar Apariciones ----
     // Elimina todos los elementos que sean iguales al enviado por parametro
+    /* 
     public void eliminarApariciones(Object elemento){
         if(this.cabecera != null && elemento != null){
             Nodo aux = this.cabecera;
@@ -304,6 +304,24 @@ public class Lista {
             }
         }
 
+    }*/
+    public void eliminarApariciones(Object elem){
+        Nodo nodo = this.cabecera;
+        if(this.cabecera != null){
+            while(nodo != null){
+                if(this.cabecera.getElem().equals(elem) ){
+                    this.cabecera = this.cabecera.getEnlace();
+                    longitud--;
+                    nodo = this.cabecera;
+                }else{
+                    while(nodo.getEnlace() != null && nodo.getEnlace().getElem().equals(elem)){
+                        nodo.setEnlace(nodo.getEnlace().getEnlace());
+                        longitud--;
+                    }
+                }
+                nodo = nodo.getEnlace();
+            }
+        }
     }
     
     //---- Obtener Multiplos ----
@@ -350,5 +368,25 @@ public class Lista {
         }
 
         return multiplos;
+    }
+
+    // ---- Parcial ----
+    public void insertarPosSiguiente(Object elem1, Object elem2){
+        if(this.cabecera != null && elem1 != null && elem2 != null){
+            if(this.cabecera.getElem() == elem1){
+                Nodo nuevo = new Nodo(elem2, this.cabecera);
+                this.cabecera = nuevo;
+                longitud++;
+            }
+            Nodo nodo = this.cabecera;
+            while(nodo != null){
+                if(nodo.getElem() == elem1){
+                    Nodo nuevo = new Nodo(elem2, nodo.getEnlace());
+                    nodo.setEnlace(nuevo);
+                    longitud++;
+                }
+                nodo = nodo.getEnlace();
+            }
+        }
     }
 }
