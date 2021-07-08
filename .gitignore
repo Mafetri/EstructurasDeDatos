@@ -13,3 +13,5 @@ src/test/jerarquicas/TestingGen.java
 src/test/jerarquicas/TestArbolGen.java
 src/test/conjuntistas/TestHeap.java
 src/test/jerarquicas/TestArbolGen.java
+src/test/lineales/TestingPila.java
+src/test/grafo/TestGrafo.java

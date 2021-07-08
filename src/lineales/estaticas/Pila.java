@@ -107,18 +107,19 @@ public class Pila {
     //---- ToString ----
     //Devuelve un String con todos los elementos de la pila
     public String toString(){
-        String enTexto;
-        enTexto = "";
+        String enTexto = "[ ";
         if(this.tope >= 0){
             //La varialbe enTexto con el primer objeto del arreglo
-            enTexto = this.arreglo[0].toString();
+            enTexto += this.arreglo[0].toString();
             //Añado a la variable enTexto un toString() de los objetos siguientes
             for(int i=1; i<=tope; i++){
-                enTexto = enTexto + "," + arreglo[i].toString();
+                enTexto = enTexto + ", " + arreglo[i].toString();
             }
+        }else{
+            enTexto += "Pila Vacia";
         }
-        
-        return enTexto;
+
+        return enTexto += " ]";
     }
 }
 
